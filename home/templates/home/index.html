@@ -7,14 +7,15 @@
 
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+<link rel="stylesheet" href="{% static 'home/style.css' %}">
 
-<div id="header">
+<div>
     <img src="https://media.cnn.com/api/v1/images/stellar/prod/200617130257-01-uva-reworked-logo-0616.jpg" width=200 height=100 alt="UVA logo">
     <a href="/polls/comments" id="anchor">Leave a Comment</a>
     <a href="/polls/comments/list" id="anchor">View Comments</a>
     <a href="/polls" id="anchor">View Polls</a>
 </div>
+
 <style>
     h1 {text-align: center;}
     p {text-align: center;}
@@ -35,5 +36,5 @@
 {% endblock %}
 
 <footer id="footer">
-    <p>Author: Zak Belkhayat Copyright: Zak Belkhayat 2023</p>
-</footer> 
+    <p>CS3240 Group A26</p>
+</footer>

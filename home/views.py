@@ -7,7 +7,7 @@ from django.views import generic
 
 # Create your views here.
 def home(request):
-    return HttpResponse("Hello, world.")
+    return render(request,'home/index.html')
 
 class IndexView(generic.ListView):
     template_name = 'home/index.html'
