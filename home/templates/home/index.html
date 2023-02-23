@@ -1,0 +1,39 @@
+{% load bootstrap5 %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% bootstrap_messages %}
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+
+<div id="header">
+    <img src="https://media.cnn.com/api/v1/images/stellar/prod/200617130257-01-uva-reworked-logo-0616.jpg" width=200 height=100 alt="UVA logo">
+    <a href="/polls/comments" id="anchor">Leave a Comment</a>
+    <a href="/polls/comments/list" id="anchor">View Comments</a>
+    <a href="/polls" id="anchor">View Polls</a>
+</div>
+<style>
+    h1 {text-align: center;}
+    p {text-align: center;}
+    .container {text-align: center; max-width: 500px; margin: auto;}
+</style>
+{% block bootstrap5_content %}
+<div class="container">
+{% if latest_question_list %}
+    <ul class="list-group">
+    {% for question in latest_question_list %}
+        <li class="list-group-item"><a class="list-group-item list-group-item-action" href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+</div>
+{% endblock %}
+
+<footer id="footer">
+    <p>Author: Zak Belkhayat Copyright: Zak Belkhayat 2023</p>
+</footer> 
