@@ -10,7 +10,9 @@
 
 
 <link rel="stylesheet" href="{% static 'home/style.css' %}">
-
+{% if user.is_authenticated %}
+<p>Welcome, {{ user.username }} !</p>
+{% endif %}
 <div>
     <img src="https://media.cnn.com/api/v1/images/stellar/prod/200617130257-01-uva-reworked-logo-0616.jpg" width=200 height=100 alt="UVA logo">
     <a href="/polls/comments" id="anchor">Leave a Comment</a>
@@ -18,8 +20,7 @@
     <a href="/polls" id="anchor">View Polls</a>
     <a href="/login" id="anchor">Sign Up/Login</a>
     {% if user.is_authenticated %}
-    <p>Welcome, {{ user.username }} !</p>
-    <a href="/accounts/logout"> Logout </a>
+    <a href="/accounts/logout" id="anchor"> Logout </a>
     {% endif %}
 </div>
 
