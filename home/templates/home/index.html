@@ -20,6 +20,7 @@
     {% if user.is_authenticated %}
     <p>Welcome, {{ user.username }} !</p>
     <a href="/accounts/logout"> Logout </a>
+    {% endif %}
 </div>
 
 <style>
