@@ -4,7 +4,8 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
-from allauth import SignupView
+from allauth.account.views import SignupView
+from .forms import TutoringSignupForm
 
 # Create your views here.
 def home(request):
@@ -16,4 +17,7 @@ def login(request):
 class IndexView(generic.ListView):
     template_name = 'home/index.html'
 
-class TutoringUserSignupView(SignupView)
+class TutoringUserSignupView(SignupView):
+    template_name = 'home/login.html'
+    form_class = TutoringSignupForm
+    view_name = 'tutoring_signup'
