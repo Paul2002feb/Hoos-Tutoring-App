@@ -9,5 +9,8 @@ from django.views import generic
 def home(request):
     return render(request,'home/index.html')
 
+def login(request):
+    return render(request, 'home/login.html')
+
 class IndexView(generic.ListView):
     template_name = 'home/index.html'
