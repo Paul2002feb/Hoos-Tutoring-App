@@ -5,7 +5,9 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from allauth.account.views import SignupView
+from allauth.socialaccount.views import SignupView as SocialSignupView
 from .forms import TutoringSignupForm
+from .forms import TutoringSocialSignupForm
 
 # Create your views here.
 def home(request):
@@ -21,3 +23,7 @@ class TutoringUserSignupView(SignupView):
     template_name = 'home/login.html'
     form_class = TutoringSignupForm
     view_name = 'tutoring_signup'
+
+class TutoringUserSocialSignupView(SocialSignupView):
+    form_class = TutoringSocialSignupForm
+    view_name = 'tutoring_social_signup'

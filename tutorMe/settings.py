@@ -164,6 +164,7 @@ SOCIALACCOUNT_FORMS = {
     'signup': 'home.forms.TutoringSignupForm'
 }
 
+
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
