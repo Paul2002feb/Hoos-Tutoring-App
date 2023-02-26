@@ -6,10 +6,10 @@ from django import forms
 class TutoringSignupForm(SignupForm):
     is_tutor = forms.BooleanField()
     def signup(self, request, user):
-        user.is_tutor = super(TutoringSignupForm, self).save(request)
+        user = super(TutoringSignupForm, self).save(request)
         tutoring_user = TutoringUser(
             user=user,
-            is_tutor=self.cleaned_data.get('is_tutor'),
+            is_tutor=self.is_tutor,
         )
         tutoring_user.save()
         return tutoring_user.user
