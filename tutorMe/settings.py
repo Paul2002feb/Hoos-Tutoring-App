@@ -87,10 +87,10 @@ WSGI_APPLICATION = 'tutorMe.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dd8pe79v2denpn',
-        'USER': 'oqqaltgmncywcb',
-        'PASSWORD': 'a38d97507435d1fab0462216985b72314bdc378d7c2db8153bdf5badc5c9f1b7',
-        'HOST': 'ec2-52-3-60-53.compute-1.amazonaws.com',
+        'NAME': 'd2620l7o0pfueg',
+        'USER': 'wawwdjuesbtcqy',
+        'PASSWORD': 'e8c39d69b18c1edbaf74df3eb3d11a585af89cc9ca4cb7dcbe73be8e1d4715af',
+        'HOST': 'ec2-3-210-146-182.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }

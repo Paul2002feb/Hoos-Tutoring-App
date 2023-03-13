@@ -1,4 +1,5 @@
 from .models import TutoringUser
+from django.core.exceptions import ValidationError
 from allauth.account.forms import SignupForm
 from allauth.socialaccount.forms import SignupForm as SocialSignup
 from django import forms
@@ -9,9 +10,12 @@ class TutoringSignupForm(SignupForm):
         user = super(TutoringSignupForm, self).save(request)
         tutoring_user = TutoringUser(
             user=user,
-            is_tutor=self.is_tutor,
+            is_tutor=self.cleaned_data['is_tutor'],
         )
-        tutoring_user.save()
+        try:
+            tutoring_user.save()
+        except ValidationError as e:
+            print('Validation error:', e)
         return tutoring_user.user
 
 class TutoringSocialSignupForm(SocialSignup):
@@ -20,7 +24,7 @@ class TutoringSocialSignupForm(SocialSignup):
         user = super(TutoringSocialSignupForm, self).save(request)
         tutoring_user = TutoringUser(
             user = user,
-            is_tutor=self.cleaned_data.get('is_tutor'),
+            is_tutor=False,
         )
         tutoring_user.save()
         return tutoring_user.user
