@@ -1,0 +1,26 @@
+{% load static %}
+<head>
+    <title>Course Selection</title>
+   
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+      <h1>Select Courses</h1>
+      <form id="search-form">
+        <div class="input-group mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="search-input"
+              placeholder="Search for courses..."
+            />
+            <button class="btn btn-primary" type="submit" onclick="queryFunction()">Search</button>
+          </div>
+          {% block content %}
+          {% endblock content %}
+        </div>
+      </form>
+    </div>
+</body>

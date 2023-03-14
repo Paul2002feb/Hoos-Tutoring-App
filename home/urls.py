@@ -6,5 +6,5 @@ app_name = 'home'
 urlpatterns = [
     path('', views.home, name='index'),
     path('login',views.TutoringUserSignupView.as_view(), name='login'),
-    path('socialsignup',views.TutoringUserSocialSignupView.as_view(), name='socialsignup')
+    path('socialsignup',views.TutoringUserSocialSignupView.as_view(), name='socialsignup'),
 ]

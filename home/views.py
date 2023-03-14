@@ -8,6 +8,7 @@ from allauth.account.views import SignupView
 from allauth.socialaccount.views import SignupView as SocialSignupView
 from .forms import TutoringSignupForm
 from .forms import TutoringSocialSignupForm
+import requests
 
 # Create your views here.
 def home(request):
@@ -15,6 +16,14 @@ def home(request):
 
 def login(request):
     return render(request, 'home/login.html')
+
+def search_courses(request):
+    return render(request, 'home/courses.html')
+
+def result_query(request):
+    url = "https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&subject=CS&catalog_nbr=3240"
+    response=requests.get(url).json()
+    return render(request, 'requstcourses.html', {'response':response})
 
 class IndexView(generic.ListView):
     template_name = 'home/index.html'

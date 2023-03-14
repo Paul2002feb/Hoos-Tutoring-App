@@ -36,6 +36,7 @@
     {% with tutoring_user=user.tutoringuser %}
         {% if tutoring_user and tutoring_user.is_tutor %}
             <p>Welcome, Tutuor!</p>
+            <a href="{% url 'courses' %}"><button>Select Courses</button></a>
         {% else %}
             <p>Welcome, Student!</p>
         {% endif %}
