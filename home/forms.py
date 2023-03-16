@@ -1,26 +1,12 @@
 from .models import TutoringUser
+from django.core.exceptions import ValidationError
 from allauth.account.forms import SignupForm
 from allauth.socialaccount.forms import SignupForm as SocialSignup
+from django.forms.widgets import HiddenInput
 from django import forms
+    
+class TutorForm(forms.ModelForm):
+    class Meta:
+        model = TutoringUser
+        fields = ('is_tutor','user')
 
-class TutoringSignupForm(SignupForm):
-    is_tutor = forms.BooleanField()
-    def signup(self, request, user):
-        user = super(TutoringSignupForm, self).save(request)
-        tutoring_user = TutoringUser(
-            user=user,
-            is_tutor=self.is_tutor,
-        )
-        tutoring_user.save()
-        return tutoring_user.user
-
-class TutoringSocialSignupForm(SocialSignup):
-    is_tutor = forms.BooleanField()
-    def save(self, request):
-        user = super(TutoringSocialSignupForm, self).save(request)
-        tutoring_user = TutoringUser(
-            user = user,
-            is_tutor=self.cleaned_data.get('is_tutor'),
-        )
-        tutoring_user.save()
-        return tutoring_user.user
