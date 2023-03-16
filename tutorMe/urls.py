@@ -17,13 +17,14 @@ from django.contrib import admin
 from django.urls import include, path
 from home import views
 from django.conf.urls.static import static
-from django.conf import settings
 
 urlpatterns = [
     path('',include('home.urls')),
     path('accounts/', include('allauth.urls')),
-    path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
+    path('notification/', views.notification_page,name='notification'),
+    path('schedule/', views.schedule_page,name='schedule'),
+    path('profile/', views.profile_page, name='profile'),
     path('courses/', views.search_courses, name='courses'),
     path('courses/request', views.result_query, name='request'),
 ]

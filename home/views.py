@@ -17,6 +17,15 @@ def home(request):
 def login(request):
     return render(request, 'home/login.html')
 
+def notification_page(request):
+    return render(request,'home/notificationpage.html')
+
+def schedule_page(request):
+    return render(request,'home/schedulepage.html')
+
+def profile_page(request):
+    return render(request,'home/profilepage.html')
+
 def search_courses(request):
     return render(request, 'home/courses.html')
 
