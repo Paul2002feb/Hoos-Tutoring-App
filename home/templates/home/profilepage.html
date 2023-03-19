@@ -31,17 +31,41 @@
         </li>
     </nav>
     </div>
-    <div class="container mt-4">
-        <div class="row">
-          <div class="col-md-4">
-            <h2>Name: </h2>
-            <p><strong>Major:</strong></p>
-            <p><strong>Hourly Rate:</strong></p>
-            <p><strong>Location Preference:</strong></p>
-            <p><strong>Online/Virtual:</strong> </p>
-            <p><strong>Courses Tutored:</strong></p>
-            <a href='/profile/course/''><button>Select Courses</button></a>
-          </div>
+    {% with tutoring_user=user.tutoringuser %}
+        {% if tutoring_user %}
+        <div class="container mt-4" style="text-align: center;">
+        <div class="row"  style="text-align: center;">
+        <h2>{{tutoring_user.full_name}}</h2>
+            <p><strong>Major: </strong>{{tutoring_user.major}}</p>
+            <p><strong>Hourly Rate:</strong> {{tutoring_user.pay_rate}}</p>
+            <p>
+                <strong>Location Preference:</strong>
+                {% for location in tutoring_user.locations %}
+                    {{location}}, 
+                {% endfor %}
+            </p>
+            <p>
+                <strong>Online/Virtual:</strong>
+                {% if tutoring_user.is_virtual %}
+                    Online
+                {% else %}
+                    Virtual
+                {% endif %}
+            </p>
+            <p>
+                <strong>Courses Tutored:</strong>
+                {% for course in tutoring_user.classes %}
+                    {{course}} \n
+                {% endfor %}
+                <a href='/profile/course/'>
+                    <button>Select Courses</button>
+                </a>
+            </p>
         </div>
-      </div>
+        <a href='/profile/edit_profile/'>
+            <button>Edit</button>
+        </a>
+        </div>
+        {% endif %}
+      {% endwith %}  
     </body>

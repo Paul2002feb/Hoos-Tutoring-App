@@ -46,7 +46,7 @@
 				<td>{{ course.subject }} {{ course.catalog_nbr }}</td>
 				<td>{{ course.class_nbr }}</td>
 				<td>{{ course.descr }}</td>
-        <td><button>Add</button></td>
+                <td><button name="selected_courses" value="{{ course.descr }}">Add</button></td>
 			</tr>
 			{% endfor %}
 		</table>

@@ -1,8 +1,5 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.template import loader
-from django.http import Http404
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.views import generic
 from allauth.account.views import SignupView
 from allauth.socialaccount.views import SignupView as SocialSignupView
@@ -41,7 +38,7 @@ def search_courses(request):
                 course_num = input_args[0]
                 url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&class_nbr={course_num}'
                 r = requests.get(url)
-            if len_input is 2:
+            elif len_input is 2:  # Use 'elif' instead of 'if' for multiple conditions
                 department = input_args[0]
                 mneomonic = input_args[1]
                 url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject={department}&catalog_nbr={mneomonic}'
@@ -52,11 +49,15 @@ def search_courses(request):
                 r = requests.get(url)
             courses = r.json()
             return render(request, 'home/courses.html', {'courses': courses})
+    
+    elif request.method == 'POST': 
+        selected_courses = request.POST.getlist('selected_courses')
+        user = request.user
+        user.tutoring_user.classes.add(selected_courses)
+        user.tutoring_user.save()
+        return HttpResponseRedirect('/profile/')
     else:
         return render(request, 'home/courses.html', {'courses': []})
-
-# def result_query(request):
-#     return render(request, 'requstcourses.html')
 
 class IndexView(generic.ListView):
     template_name = 'home/index.html'
@@ -80,3 +81,22 @@ def tutor(request):
         form = TutorForm({'user': request.user})
         form.fields['user'].widget = HiddenInput()
     return render(request, 'home/tutorform.html', {'form':form})
+
+def edit_profile(request):
+    tutoring_user = request.user.tutoringuser
+
+    if request.method == 'POST':
+        form = TutorForm(request.POST, instance=tutoring_user)
+        if form.is_valid():
+            form.save(commit=True)
+            return HttpResponseRedirect('/profile/')
+    else:
+        form_data = {
+            'full_name': tutoring_user.full_name,
+            'major': tutoring_user.major,
+            'pay_rate': tutoring_user.pay_rate,
+            'locations': tutoring_user.locations,
+            'is_virtual': 'true' if tutoring_user.is_virtual else 'false'
+        }
+        form = TutorForm(initial=form_data)
+    return render(request, 'home/editprofile.html', {'form': form, 'tutoring_user': tutoring_user})

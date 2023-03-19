@@ -26,4 +26,5 @@ urlpatterns = [
     path('schedule/', views.schedule_page,name='schedule'),
     path('profile/', views.profile_page, name='profile'),
     path('profile/course/', views.search_courses, name='courses'),
+    path('profile/edit_profile/', views.edit_profile, name='edit_profile'),
 ]
