@@ -15,8 +15,8 @@ class TutoringUser(models.Model):
         ('PSY', 'Psychology')
     ]
     major = models.CharField(max_length=3, choices=MAJOR_CHOICES)
-    classes = ArrayField(models.CharField(max_length=20))
-    pay_rate = models.DecimalField(max_digits=4, decimal_places=2)
+    classes = ArrayField(models.CharField(max_length=20, default="NA"))
+    pay_rate = models.DecimalField(max_digits=4, decimal_places=2, default=0)
 
 class TutorRequest(models.Model):
     is_verified = models.BooleanField(default=False)
