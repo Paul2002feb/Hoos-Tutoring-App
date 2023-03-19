@@ -38,7 +38,7 @@ def search_courses(request):
                 course_num = input_args[0]
                 url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&class_nbr={course_num}'
                 r = requests.get(url)
-            if len_input is 2:
+            elif len_input is 2:  # Use 'elif' instead of 'if' for multiple conditions
                 department = input_args[0]
                 mneomonic = input_args[1]
                 url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject={department}&catalog_nbr={mneomonic}'
@@ -49,6 +49,13 @@ def search_courses(request):
                 r = requests.get(url)
             courses = r.json()
             return render(request, 'home/courses.html', {'courses': courses})
+    
+    elif request.method == 'POST': 
+        selected_courses = request.POST.getlist('selected_courses')
+        user = request.user
+        user.tutoring_user.classes.add(selected_courses)
+        user.tutoring_user.save()
+        return HttpResponseRedirect('/profile/')
     else:
         return render(request, 'home/courses.html', {'courses': []})
 
