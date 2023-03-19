@@ -1,8 +1,5 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.template import loader
-from django.http import Http404
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.views import generic
 from allauth.account.views import SignupView
 from allauth.socialaccount.views import SignupView as SocialSignupView
@@ -55,9 +52,6 @@ def search_courses(request):
     else:
         return render(request, 'home/courses.html', {'courses': []})
 
-# def result_query(request):
-#     return render(request, 'requstcourses.html')
-
 class IndexView(generic.ListView):
     template_name = 'home/index.html'
 
@@ -80,3 +74,22 @@ def tutor(request):
         form = TutorForm({'user': request.user})
         form.fields['user'].widget = HiddenInput()
     return render(request, 'home/tutorform.html', {'form':form})
+
+def edit_profile(request):
+    tutoring_user = request.user.tutoringuser
+
+    if request.method == 'POST':
+        form = TutorForm(request.POST, instance=tutoring_user)
+        if form.is_valid():
+            form.save(commit=True)
+            return HttpResponseRedirect('/profile/')
+    else:
+        form_data = {
+            'full_name': tutoring_user.full_name,
+            'major': tutoring_user.major,
+            'pay_rate': tutoring_user.pay_rate,
+            'locations': tutoring_user.locations,
+            'is_virtual': 'true' if tutoring_user.is_virtual else 'false'
+        }
+        form = TutorForm(initial=form_data)
+    return render(request, 'home/editprofile.html', {'form': form, 'tutoring_user': tutoring_user})

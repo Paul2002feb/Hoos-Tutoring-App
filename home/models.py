@@ -14,10 +14,13 @@ class TutoringUser(models.Model):
         ('PSY', 'Psychology'),
         ('PSY', 'Psychology')
     ]
-    def get_classes_default():
+    def get_default():
         return list()
     major = models.CharField(max_length=3, choices=MAJOR_CHOICES)
-    classes = ArrayField(models.CharField(max_length=20, default="NA"), default=get_classes_default)
+    locations = ArrayField(models.CharField(max_length=20, default="NA"), default=get_default)
+    is_virtual = models.BooleanField(default=False)
+    classes = ArrayField(models.CharField(max_length=50, default="NA"), default=get_default)
+    Availability = ArrayField(models.CharField(max_length=50, default="NA"), default=get_default)
     pay_rate = models.DecimalField(max_digits=4, decimal_places=2, default=0)
 
 class TutorRequest(models.Model):
