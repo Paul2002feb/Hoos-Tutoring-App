@@ -6,7 +6,8 @@
 <head>
     <link rel="stylesheet" href="{% static 'home/style.css' %}">
 </head>
-<div class="navbar-container">
+<body>
+    <div class="navbar-container">
     <nav class="navbar">
         <ul class="navbar navbar-expand-sm fixed-top">
         <li class="nav-item {% if request.path == '/' %}active{% endif %}" style="list-style-type: none;">
@@ -39,7 +40,8 @@
             <p><strong>Location Preference:</strong></p>
             <p><strong>Online/Virtual:</strong> </p>
             <p><strong>Courses Tutored:</strong></p>
-            <a href="{% url 'courses' %}"><button>Select Courses</button></a>
+            <a href='/profile/course/''><button>Select Courses</button></a>
           </div>
         </div>
       </div>
+    </body>

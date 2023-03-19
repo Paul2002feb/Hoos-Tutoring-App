@@ -25,6 +25,5 @@ urlpatterns = [
     path('notification/', views.notification_page,name='notification'),
     path('schedule/', views.schedule_page,name='schedule'),
     path('profile/', views.profile_page, name='profile'),
-    path('courses/', views.search_courses, name='courses'),
-    path('courses/request', views.result_query, name='request'),
+    path('profile/course/', views.search_courses, name='courses'),
 ]
