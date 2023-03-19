@@ -8,5 +8,5 @@ from django import forms
 class TutorForm(forms.ModelForm):
     class Meta:
         model = TutoringUser
-        fields = ('is_tutor','user')
+        fields = ('is_tutor','user','full_name','major')
 
