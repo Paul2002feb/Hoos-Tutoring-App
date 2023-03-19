@@ -11,12 +11,6 @@ body {
     background: rgb(5, 107, 208);
 }
 
-#anchor {
-    display: inline-block;
-    background: #69c;
-    color: #fff;
-    padding: 5px 10px;
-}
 
 #footer {
     position:fixed;
@@ -25,6 +19,7 @@ body {
     height: 40px;   /* Height of the footer */
     background: rgba(44, 11, 128, 0.658);
 }
+
 #footer.comment {
     position:relative;
     bottom: 0;
@@ -32,3 +27,32 @@ body {
     height: 40px;   /* Height of the footer */
     background: rgba(44, 11, 128, 0.658);
 }
+.navbar {
+    background-color: rgb(11, 11, 11);
+    position: relative;
+    top: 0;
+    width: 100%;
+    height: 40px; 
+    align-items: center;
+}
+  /* Navbar links */
+  .navbar a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+  }
+  
+  /* Navbar links on hover */
+  .navbar a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  /* Active/current navbar link */
+  .active {
+    background-color: #e1e4e2;
+    color: white;
+  }
