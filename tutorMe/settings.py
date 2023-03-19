@@ -160,9 +160,9 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_AUTO_SIGNUP = False
 
-SOCIALACCOUNT_FORMS = {
-    'signup': 'home.forms.TutoringSignupForm'
-}
+# SOCIALACCOUNT_FORMS = {
+#     'signup': 'home.forms.TutoringSignupForm'
+# }
 
 
 SOCIALACCOUNT_PROVIDERS = {
