@@ -8,5 +8,6 @@ urlpatterns = [
     path('login',views.TutoringUserSignupView.as_view(), name='login'),
     path('socialsignup',views.TutoringUserSocialSignupView.as_view(), name='socialsignup'),
     path('accounts/', include('allauth.urls')),
-    path('tutorform',views.tutor, name='tutorform')
+    path('tutorform',views.tutor, name='tutorform'),
+    path('update_requests', views.update_requests, name='requestupdate')
 ]

@@ -8,6 +8,8 @@ from allauth.account.forms import SignupForm
 from allauth.socialaccount.forms import SignupForm as SocialSignup
 from .forms import *
 from django.forms.widgets import HiddenInput
+from django.http import HttpResponse
+from .models import *
 
 
 # Create your views here.
@@ -100,3 +102,17 @@ def edit_profile(request):
         }
         form = TutorForm(initial=form_data)
     return render(request, 'home/editprofile.html', {'form': form, 'tutoring_user': tutoring_user})
+
+def update_requests(request):
+    if request.method == 'POST':
+        reqDict = dict(request.POST['event'])
+        print(reqDict)
+        tutorRequest = TutorRequest()
+        tutorRequest.is_verified = False
+        tutorRequest.request_user = request.user
+        tutorRequest.request_tutor = request.POST['event']['title']
+        tutorRequest.request_startTime = request.POST['event']['start']
+        tutorRequest.request_endTime = (request.POST['event'])['end']
+        tutorRequest.save()
+        message = 'update successful'
+    return HttpResponse(message)

@@ -76,11 +76,17 @@
               start: start,
               end: end,
               color: 'green'
-              
             };
             $('#calendar').fullCalendar('renderEvent', eventData, true);
           }
           $('#calendar').fullCalendar('unselect');
+          $.ajax({
+            url: '/update_requests/',
+            data: {'event': eventData},
+            type: 'POST'
+          }).done(function(response){
+            console.log(response);
+          });
         },
         // Handle clicking on an event
         eventClick: function(calEvent, jsEvent, view) {
