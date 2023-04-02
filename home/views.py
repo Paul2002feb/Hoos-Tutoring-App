@@ -34,11 +34,11 @@ def search_courses(request):
         else:
             input_args = input.split()
             len_input = len(input_args)
-            if len_input is 1:
+            if len_input == 1:
                 course_num = input_args[0]
                 url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&class_nbr={course_num}'
                 r = requests.get(url)
-            elif len_input is 2:  # Use 'elif' instead of 'if' for multiple conditions
+            elif len_input == 2:  # Use 'elif' instead of 'if' for multiple conditions
                 department = input_args[0]
                 mneomonic = input_args[1]
                 url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject={department}&catalog_nbr={mneomonic}'
