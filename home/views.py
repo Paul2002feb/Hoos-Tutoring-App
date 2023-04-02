@@ -28,6 +28,13 @@ def schedule_page(request):
 def profile_page(request):
     return render(request,'home/profilepage.html')
 
+def view_requests(request):
+    try:
+        request_list = TutorRequest.objects.get(request_user=request.user.username)
+        return render(request,'home/requestIndex.html', {'request_list' : request_list})
+    except:
+        return render(request,'home/requestIndex.html')
+
 def search_courses(request):
     if request.method == 'GET':
         input = request.GET.get('search-input')

@@ -1,8 +1,11 @@
-<!DOCTYPE html>
-<html>
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load static %}
 <head>
-    <title>Course Selection</title>
+  <link rel="stylesheet" href="{% static 'home/style.css' %}">
 </head>
+<body>
 <div class="navbar-container">
   <nav class="navbar">
       <ul class="navbar navbar-expand-sm fixed-top">
@@ -32,29 +35,24 @@
       </li>
   </nav>
 </div>
-<body>
-	<form action='/profile/course/' method="GET">
-		<label for="search-input">Course Search:</label>
-		<input type="text" class="form-control" id="search-input" name="search-input" placeholder="Search for courses..." required><br><br>
-		<button class="btn btn-primary" type="submit">Search</button>
-	</form>
-	{% if courses %}
-		<h2>Results:</h2>
-		<table>
-			<tr>
-				<th>Class Number</th>
-                <th>Course</th>
-				<th>Title</th>
-			</tr>
-			{% for course in courses%}
-			<tr>
-				<td>{{ course.subject }} {{ course.catalog_nbr }}</td>
-				<td>{{ course.class_nbr }}</td>
-				<td>{{ course.descr }}</td>
-                <td><button name="selected_courses" value="{{ course.descr }}">Add</button></td>
-			</tr>
-			{% endfor %}
-		</table>
-	{% endif %}
+<div id="page" class="container">
+  {% block page %}
+  {% if request_list %}
+    <ul>
+    {% for request in request_list %}
+        <li>
+            <a>{{ request.request_tutor }}</a>
+            <a>{{ request.request_startTime }}</a>
+            <a>{{ request.request_endTime }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+    {% else %}
+        <p>You have no requests</p>
+    {% endif %}
+  {% endblock %}
+</div>
+<footer id="footer">
+  <p>CS3240 Group A26</p>
+</footer> 
 </body>
-</html>
