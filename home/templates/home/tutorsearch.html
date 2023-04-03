@@ -1,0 +1,28 @@
+{% extends "home/navbar.html" %}
+{% block page %}
+<form action='/tutorsearch' method="GET">
+    <label for="search-input">Tutor Search:</label>
+    <input type="text" class="form-control" id="search-input" name="search-input" placeholder="Search for tutors..." required><br><br>
+    <button class="btn btn-primary" type="submit">Search</button>
+</form>
+{% if tutor_list %}
+    <h2>Results:</h2>
+    <table>
+        <tr>
+            <th>Tutor Name</th>
+            <th>Major</th>
+            <th>Pay Rate</th>
+        </tr>
+        {% for tutor in tutor_list %}
+        {% if tutor.is_tutor %}
+        <tr>
+            <td>{{ tutor.full_name }}</td>
+            <td>{{ tutor.major }}</td>
+            <td>{{ tutor.pay_rate }}</td>
+            <td><button>Request</button></td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+{% endif %}
+{% endblock %}

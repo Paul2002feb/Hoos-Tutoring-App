@@ -10,6 +10,7 @@ from .forms import *
 from django.forms.widgets import HiddenInput
 from django.http import HttpResponse
 from .models import *
+from django.db.models import Q
 
 
 # Create your views here.
@@ -27,6 +28,18 @@ def schedule_page(request):
 
 def profile_page(request):
     return render(request,'home/profilepage.html')
+
+def search_tutors(request):
+    if request.method == 'GET':
+        input = request.GET.get('search-input')
+        if input is None:
+            return render(request, 'home/tutorsearch.html', {'tutor_list': []})
+        else:
+            tutor_list = TutoringUser.objects.filter(
+            Q(full_name__icontains=input) | Q(pay_rate__icontains=input) | Q(major__icontains=input)
+            )
+            return render(request, 'home/tutorsearch.html', {'tutor_list': tutor_list})
+    return render(request,'home/tutorsearch.html')
 
 def view_requests(request):
     try:
