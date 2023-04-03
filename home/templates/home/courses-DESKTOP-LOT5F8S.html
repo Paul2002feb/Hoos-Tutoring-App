@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Selection</title>
+</head>
+<div class="navbar-container">
+  <nav class="navbar">
+      <ul class="navbar navbar-expand-sm fixed-top">
+      <li class="nav-item {% if request.path == '/' %}active{% endif %}" style="list-style-type: none;">
+          <a class="nav-link" href='/'>Home</a>
+      </li>
+      <li class="nav-item {% if request.path == '/notification/' %}active{% endif %}" style="list-style-type: none;">
+          <a class="nav-link" href='/notification/'>Notifications</a>
+      </li>
+      <li class="nav-item {% if request.path == '/schedule/' %}active{% endif %}" style="list-style-type: none;">
+          <a class="nav-link" href='/schedule/'>Schedule</a>
+      </li>
+      <li class="nav-item {% if request.path == '/profile/' %}active{% endif %}" style="list-style-type: none;">
+          <a class="nav-link" href= '/profile/'>Profile</a>
+      </li>
+      <li class="nav-item {% if request.path == '/schedule/' %}active{% endif %}" style="list-style-type: none;">
+          {% if user.is_authenticated %}
+          <a class="nav-link" href="/accounts/logout"> Logout </a>
+          {% else %}
+          <a class="nav-link" href="/login">Sign Up/Sign In</a>
+          {% endif %}
+      </li>
+  </nav>
+</div>
+<body>
+	<form action='/profile/course/' method="GET">
+		<label for="search-input">Course Search:</label>
+		<input type="text" class="form-control" id="search-input" name="search-input" placeholder="Search for courses..." required><br><br>
+		<button class="btn btn-primary" type="submit">Search</button>
+	</form>
+	{% if courses %}
+		<h2>Results:</h2>
+		<table>
+			<tr>
+				<th>Class Number</th>
+                <th>Course</th>
+				<th>Title</th>
+			</tr>
+			{% for course in courses%}
+			<tr>
+				<td>{{ course.subject }} {{ course.catalog_nbr }}</td>
+				<td>{{ course.class_nbr }}</td>
+				<td>{{ course.descr }}</td>
+                <td><button name="selected_courses" value="{{ course.descr }}">Add</button></td>
+			</tr>
+			{% endfor %}
+		</table>
+	{% endif %}
+</body>
+</html>

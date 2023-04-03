@@ -89,10 +89,6 @@ class TutoringUserSignupView(SignupView):
     form_class = SignupForm
     view_name = 'tutoring_signup'
 
-class TutoringUserSocialSignupView(SocialSignupView):
-    form_class = SocialSignup
-    view_name = 'tutoring_social_signup'
-
 def tutor(request):
     if request.method == 'POST':
         form = TutorForm(request.POST)
