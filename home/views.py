@@ -30,23 +30,87 @@ def profile_page(request):
     return render(request,'home/profilepage.html')
 
 def search_tutors(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
+        tutor_id = request.POST.get('tutor_id')
+        tutor = TutoringUser.objects.filter(id=tutor_id).first()
+        print(tutor.user,'diwhefidwj')
+        if tutor:
+            session_date = request.POST.get('session_date')
+            session_time = request.POST.get('session_time')
+            pay_rate = request.POST.get('pay_rate')
+            student = request.user
+            tutor_request = TutorRequestAccount.objects.create(
+                student=student,
+                tutor=tutor.user,
+                session_date=session_date,
+                session_time=session_time,
+                pay_rate=pay_rate,
+                status='pending'
+            )
+            print(tutor_request)
+            tutor_request.save()
+            return redirect('/tutorsearch')  # replace with the appropriate URL for the student dashboard
+        else:
+            print('failed')
+            return render(request, 'home/tutorsearch.html', {'error': 'Tutor not found'})
+    elif request.method == 'GET':
         input = request.GET.get('search-input')
         if input is None:
             return render(request, 'home/tutorsearch.html', {'tutor_list': []})
         else:
             tutor_list = TutoringUser.objects.filter(
-            Q(full_name__icontains=input) | Q(pay_rate__icontains=input) | Q(major__icontains=input)
+                Q(full_name__icontains=input) | Q(pay_rate__icontains=input) | Q(major__icontains=input)
             )
             return render(request, 'home/tutorsearch.html', {'tutor_list': tutor_list})
     return render(request,'home/tutorsearch.html')
 
+
+
 def view_requests(request):
-    try:
-        request_list = TutorRequest.objects.get(request_user=request.user.username)
-        return render(request,'home/requestIndex.html', {'request_list' : request_list})
-    except:
-        return render(request,'home/requestIndex.html')
+    my_user = TutoringUser.objects.filter(user=request.user).first()
+    print(my_user.is_tutor)
+    if my_user.is_tutor == True:
+        if request.method == 'GET':
+            # request_list = TutorRequest.objects.get(request_user=request.user.username)
+            request_list = TutorRequestAccount.objects.filter(tutor=request.user)
+            print(request_list,'udgwgduwgf')
+            return render(request,'home/requestIndex.html', {'request_list' : request_list})
+        
+        if request.method == 'POST':
+            request_id = request.POST.get('request_id')
+            print(request_id)
+            status = request.POST.get('status')
+            try:
+                tutor_request = TutorRequestAccount.objects.get(id=request_id)
+                # Update the status of the tutor_request
+                tutor_request.status = status
+                tutor_request.save()
+                print(tutor_request.status)
+                return redirect("/requestlist")  # Redirect to the request list page after successful update
+            except TutorRequestAccount.DoesNotExist:
+                print('pass')
+                pass  # Handle case where request_id does not exist
+                print('pass')
+    elif my_user.is_tutor == False:
+        if request.method == 'GET':
+            # request_list = TutorRequest.objects.get(request_user=request.user.username)
+            request_list = TutorRequestAccount.objects.filter(student=request.user)
+            print(request_list,'udgwgduwgf')
+            return render(request,'home/requestIndex.html', {'request_list' : request_list})
+        
+        if request.method == 'PUT':
+            request_id = request.POST.get('request_id')
+            status = request.POST.get('status')
+            try:
+                tutor_request = TutorRequestAccount.objects.get(id=request_id)
+                # Update the status of the tutor_request
+                tutor_request.status = status
+                tutor_request.save()
+                return redirect(request,'home/requestIndex.html')  # Redirect to the request list page after successful update
+            except TutorRequestAccount.DoesNotExist:
+                pass  # Handle case where request_id does not exist
+                print('pass')
+                    
 
 def search_courses(request):
     if request.method == 'GET':
@@ -119,16 +183,6 @@ def edit_profile(request):
         form = TutorForm(initial=form_data)
     return render(request, 'home/editprofile.html', {'form': form, 'tutoring_user': tutoring_user})
 
-def update_requests(request):
-    if request.method == 'POST':
-        reqDict = dict(request.POST['event'])
-        print(reqDict)
-        tutorRequest = TutorRequest()
-        tutorRequest.is_verified = False
-        tutorRequest.request_user = request.user
-        tutorRequest.request_tutor = request.POST['event']['title']
-        tutorRequest.request_startTime = request.POST['event']['start']
-        tutorRequest.request_endTime = (request.POST['event'])['end']
-        tutorRequest.save()
-        message = 'update successful'
-    return HttpResponse(message)
+
+
+
