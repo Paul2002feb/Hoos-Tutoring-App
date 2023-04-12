@@ -1,16 +1,49 @@
 {% extends "home/navbar.html" %}
 {% block page %}
-  {% if request_list %}
-    <ul>
-    {% for request in request_list %}
-        <li>
-            <a>{{ request.request_tutor }}</a>
-            <a>{{ request.request_startTime }}</a>
-            <a>{{ request.request_endTime }}</a>
-        </li>
-    {% endfor %}
-    </ul>
-  {% else %}
-        <p>You have no requests</p>
-  {% endif %}
+{% if request_list %}
+
+<table>
+<tr>
+<th>Student Name</th>
+<th>Tutor Name</th>
+<th>Date</th>
+<th>Start Time</th>
+<th>End Time</th>
+<th>Action</th>
+</tr>
+{% for request in request_list %}
+<tr>
+<td>{{ request.student }}</td>
+<td>{{ request.tutor }}</td>
+<td>{{ request.session_date }}</td>
+<td>{{ request.session_time }}</td>
+<td>{{ request.pay_rate }}</td>
+<td>
+    {% if user.is_authenticated %}
+    {% with tutoring_user=user.tutoringuser %}
+    {% if tutoring_user %}
+    {% if tutoring_user.is_tutor %}
+        {% if request.status == 'pending' %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="request_id" value="{{ request.id }}">
+            <button type="submit" name="status" value="approved">Accept</button>
+            <button type="submit" name="status" value="rejected">Reject</button>
+        </form>
+        {% else %}
+        <td>{{ request.status }}</td>
+        {% endif %}
+    {% else %}   
+    <td>{{ request.status }}</td>    
+    {% endif %}
+    {% endif %}
+    {% endwith %}
+    {% endif %}
+</td>
+</tr>
+{% endfor %}
+</table>
+{% else %}
+<p>You have no requests</p>
+{% endif %}
 {% endblock %}
