@@ -39,7 +39,7 @@ def search_tutors(request):
             session_time = request.POST.get('session_time')
             pay_rate = request.POST.get('pay_rate')
             student = request.user
-            tutor_request = TutorRequestAccount.objects.create(
+            tutor_request = TutorRequest.objects.create(
                 student=student,
                 tutor=tutor.user,
                 session_date=session_date,
@@ -59,7 +59,7 @@ def search_tutors(request):
             return render(request, 'home/tutorsearch.html', {'tutor_list': []})
         else:
             tutor_list = TutoringUser.objects.filter(
-                Q(full_name__icontains=input) | Q(pay_rate__icontains=input) | Q(major__icontains=input)
+                Q(full_name__icontains=input) | Q(pay_rate__icontains=input) | Q(major__icontains=input) | Q(classes__icontains=input)
             )
             return render(request, 'home/tutorsearch.html', {'tutor_list': tutor_list})
     return render(request,'home/tutorsearch.html')
@@ -72,7 +72,7 @@ def view_requests(request):
     if my_user.is_tutor == True:
         if request.method == 'GET':
             # request_list = TutorRequest.objects.get(request_user=request.user.username)
-            request_list = TutorRequestAccount.objects.filter(tutor=request.user)
+            request_list = TutorRequest.objects.filter(tutor=request.user)
             print(request_list,'udgwgduwgf')
             return render(request,'home/requestIndex.html', {'request_list' : request_list})
         
@@ -81,20 +81,20 @@ def view_requests(request):
             print(request_id)
             status = request.POST.get('status')
             try:
-                tutor_request = TutorRequestAccount.objects.get(id=request_id)
+                tutor_request = TutorRequest.objects.get(id=request_id)
                 # Update the status of the tutor_request
                 tutor_request.status = status
                 tutor_request.save()
                 print(tutor_request.status)
                 return redirect("/requestlist")  # Redirect to the request list page after successful update
-            except TutorRequestAccount.DoesNotExist:
+            except TutorRequest.DoesNotExist:
                 print('pass')
                 pass  # Handle case where request_id does not exist
                 print('pass')
     elif my_user.is_tutor == False:
         if request.method == 'GET':
             # request_list = TutorRequest.objects.get(request_user=request.user.username)
-            request_list = TutorRequestAccount.objects.filter(student=request.user)
+            request_list = TutorRequest.objects.filter(student=request.user)
             print(request_list,'udgwgduwgf')
             return render(request,'home/requestIndex.html', {'request_list' : request_list})
         
@@ -102,12 +102,12 @@ def view_requests(request):
             request_id = request.POST.get('request_id')
             status = request.POST.get('status')
             try:
-                tutor_request = TutorRequestAccount.objects.get(id=request_id)
+                tutor_request = TutorRequest.objects.get(id=request_id)
                 # Update the status of the tutor_request
                 tutor_request.status = status
                 tutor_request.save()
                 return redirect(request,'home/requestIndex.html')  # Redirect to the request list page after successful update
-            except TutorRequestAccount.DoesNotExist:
+            except TutorRequest.DoesNotExist:
                 pass  # Handle case where request_id does not exist
                 print('pass')
                     
@@ -118,21 +118,22 @@ def search_courses(request):
         if input is None:
             return render(request, 'home/courses.html', {'courses': []})
         else:
-            input_args = input.split()
-            len_input = len(input_args)
-            if len_input == 1:
-                course_num = input_args[0]
-                url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&class_nbr={course_num}'
-                r = requests.get(url)
-            elif len_input == 2:  # Use 'elif' instead of 'if' for multiple conditions
-                department = input_args[0]
-                mneomonic = input_args[1]
-                url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject={department}&catalog_nbr={mneomonic}'
-                r = requests.get(url)
-            else:
-                name = input.replace(" ","+")
-                url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&keyword={input}'
-                r = requests.get(url)
+            # input_args = input.split()
+            # len_input = len(input_args)
+            # if len_input == 1:
+            #     course_num = input_args[0]
+            #     url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&class_nbr={course_num}'
+            #     r = requests.get(url)
+            # elif len_input == 2:  # Use 'elif' instead of 'if' for multiple conditions
+            #     department = input_args[0]
+            #     mneomonic = input_args[1]
+            #     url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject={department}&catalog_nbr={mneomonic}'
+            #     r = requests.get(url)
+            # else:
+            #   
+            name = input.replace(" ","+")
+            url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&keyword={name}'
+            r = requests.get(url)
             courses = r.json()
             return render(request, 'home/courses.html', {'courses': courses})
     

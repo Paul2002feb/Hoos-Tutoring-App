@@ -5,4 +5,3 @@ from .models import *
 # Register your models here.
 admin.site.register(TutoringUser)
 admin.site.register(TutorRequest)
-admin.site.register(TutorRequestAccount)
