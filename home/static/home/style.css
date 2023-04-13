@@ -105,3 +105,22 @@ body {
   /* margin: 80 auto; */
   /* font-size: 40px; */
 }
+
+.somecss {
+  display: flex;
+  font-weight: bold;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+  /* font-family: Arial, sans-serif; */
+}
+
+.coursesearch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* padding: 2%; */
+
+}
