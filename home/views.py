@@ -10,6 +10,7 @@ from .forms import *
 from django.forms.widgets import HiddenInput
 from django.http import HttpResponse
 from .models import *
+from django.db.models.functions import Lower
 from django.db.models import Q
 
 
@@ -167,23 +168,43 @@ def tutor(request):
 
 def edit_profile(request):
     tutoring_user = request.user.tutoringuser
-
     if request.method == 'POST':
-        form = TutorForm(request.POST, instance=tutoring_user)
-        if form.is_valid():
-            form.save(commit=True)
-            return HttpResponseRedirect('/profile/')
+        full_name = request.POST.get('full_name')
+        major = request.POST.get('major')
+        pay_rate = request.POST.get('pay_rate')
+        is_virtual = request.POST.get('is_virtual')
+        new_location = request.POST.get('new_location') 
+        locations_to_remove = request.POST.getlist('remove_location')
+        if 'is_virtual' in request.POST and request.POST['is_virtual'] == 'true':
+            is_virtual = True
+        else:
+            is_virtual = False
+
+        if new_location:
+            tutoring_user.locations.append(new_location)
+
+        if locations_to_remove:
+            for location in locations_to_remove:
+                tutoring_user.locations.remove(location)
+
+        # Update the TutoringUser object with the new values
+        TutoringUser.objects.filter(pk=tutoring_user.pk).update(
+            full_name=full_name,
+            major=major,
+            pay_rate=pay_rate,
+            is_virtual=is_virtual,
+            locations=tutoring_user.locations
+        )
+
+        return HttpResponseRedirect('/profile/')
     else:
         form_data = {
             'full_name': tutoring_user.full_name,
             'major': tutoring_user.major,
             'pay_rate': tutoring_user.pay_rate,
+            'is_virtual': tutoring_user.is_virtual,
             'locations': tutoring_user.locations,
-            'is_virtual': 'true' if tutoring_user.is_virtual else 'false'
         }
         form = TutorForm(initial=form_data)
+
     return render(request, 'home/editprofile.html', {'form': form, 'tutoring_user': tutoring_user})
-
-
-
-

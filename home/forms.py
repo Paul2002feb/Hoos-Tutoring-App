@@ -9,4 +9,3 @@ class TutorForm(forms.ModelForm):
     class Meta:
         model = TutoringUser
         fields = ('is_tutor','user','full_name','major', 'locations', 'is_virtual', 'pay_rate')
-
