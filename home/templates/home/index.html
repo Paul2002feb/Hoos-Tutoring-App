@@ -7,20 +7,29 @@
     .container {text-align: center; max-width: 500px; margin: auto;}
 </style>
 {% block bootstrap5_content %}
-<div class="container">
+
+
+<div class="paul">
+    
 {% if user.is_authenticated %}
+
+
     {% with tutoring_user=user.tutoringuser %}
         {% if tutoring_user %}
             {% if tutoring_user.is_tutor %}
                 <p>Welcome, Tutor {{ user.username }}!</p>
+                <img src="/static/home/images/Welcome.png">
             {% else %}
-                <p>Welcome, Student {{ user.username }}!</p>
+                <p >Welcome, Student {{ user.username }}!</p>
+                <img src="/static/home/images/Student.png">
             {% endif %}
         {% else %}
             <a href="/tutorform" id="anchor">Set Up Tutoring Account</a>
+            
         {% endif %}
     {% endwith %}
 {% endif %}
 </div>
+
 {% endblock %}
 {% endblock %}
