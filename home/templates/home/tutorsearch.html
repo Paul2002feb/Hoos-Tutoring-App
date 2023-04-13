@@ -22,17 +22,18 @@
 <h2 class="containerizer">Results:</h2>
 <table class="containering">
   <tr>
-    <th>Tutor Name</th>
-    <th>Major</th>
-    <th>Pay Rate</th>
-    <th>Request</th>
-  </tr>
+    <th class="text-center styled-header">Tutor Name</th>
+    <th class="text-center styled-header">Major</th>
+    <th class="text-center styled-header">Pay Rate</th>
+    <th class="text-center styled-header">Request</th>
+
+  </tr >
   {% for tutor in tutor_list %} {% if tutor.is_tutor %}
-  <tr>
-    <td>{{ tutor.full_name }}</td>
-    <td>{{ tutor.major }}</td>
-    <td>{{ tutor.pay_rate }}</td>
-    <td>
+  <tr >
+    <td class="text-center styled-header">{{ tutor.full_name }}</td>
+    <td class="text-center styled-header">{{ tutor.major }}</td>
+    <td class="text-center styled-header">{{ tutor.pay_rate }}</td>
+    <td class="text-center styled-header">
       <form action="" method="POST">
         {% csrf_token %}
         <input type="hidden" name="tutor_id" value="{{ tutor.id }}" />
