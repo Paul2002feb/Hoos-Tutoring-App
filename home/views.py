@@ -128,6 +128,7 @@ def search_courses(request):
                 r = requests.get(url)
             elif len_input == 2:  # Use 'elif' instead of 'if' for multiple conditions
                 department = input_args[0]
+                department = department.upper()
                 mneomonic = input_args[1]
                 url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject={department}&catalog_nbr={mneomonic}'
                 r = requests.get(url)
