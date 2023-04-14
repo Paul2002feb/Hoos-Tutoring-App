@@ -114,35 +114,37 @@ def view_requests(request):
                     
 
 def search_courses(request):
+    tutoring_user = request.user.tutoringuser
     if request.method == 'GET':
         input = request.GET.get('search-input')
         if input is None:
             return render(request, 'home/courses.html', {'courses': []})
         else:
-            # input_args = input.split()
-            # len_input = len(input_args)
-            # if len_input == 1:
-            #     course_num = input_args[0]
-            #     url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&class_nbr={course_num}'
-            #     r = requests.get(url)
-            # elif len_input == 2:  # Use 'elif' instead of 'if' for multiple conditions
-            #     department = input_args[0]
-            #     mneomonic = input_args[1]
-            #     url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject={department}&catalog_nbr={mneomonic}'
-            #     r = requests.get(url)
-            # else:
-            #   
-            name = input.replace(" ","+")
-            url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&keyword={name}'
-            r = requests.get(url)
+            input_args = input.split()
+            len_input = len(input_args)
+            if len_input == 1:
+                course_num = input_args[0]
+                url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&class_nbr={course_num}'
+                r = requests.get(url)
+            elif len_input == 2:  # Use 'elif' instead of 'if' for multiple conditions
+                department = input_args[0]
+                mneomonic = input_args[1]
+                url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject={department}&catalog_nbr={mneomonic}'
+                r = requests.get(url)
+            else:  
+                name = input.replace(" ","+")
+                url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&keyword={name}'
+                r = requests.get(url)
+                
             courses = r.json()
             return render(request, 'home/courses.html', {'courses': courses})
     
     elif request.method == 'POST': 
+        print("add is being clicked")
         selected_courses = request.POST.getlist('selected_courses')
-        user = request.user
-        user.tutoring_user.classes.add(selected_courses)
-        user.tutoring_user.save()
+        for course in selected_courses:
+            tutoring_user.classes.append(course)
+        tutoring_user.save()
         return HttpResponseRedirect('/profile/')
     else:
         return render(request, 'home/courses.html', {'courses': []})
