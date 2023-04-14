@@ -25,7 +25,7 @@
             {% for course in courses%}
                 <tr>
                     <td>
-                        <input type="checkbox" class="course-checkbox" name="selected_courses" value="{{ course.descr }}">
+                        <input type="checkbox" class="course-checkbox" name="selected_courses" value="{{ course.subject }} {{ course.catalog_nbr }} {{ course.descr }}">
                     </td>
                     <td>{{ course.subject }} {{ course.catalog_nbr }}</td>
                     <td>{{ course.class_nbr }}</td>
