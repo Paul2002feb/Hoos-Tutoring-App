@@ -17,10 +17,10 @@
     {% with tutoring_user=user.tutoringuser %}
         {% if tutoring_user %}
             {% if tutoring_user.is_tutor %}
-                <p>Welcome, Tutor {{ user.username }}!</p>
+                <p>Welcome, Tutor {{ user.username }} 👋</p>
                 <img src="/static/home/images/Welcome.png">
             {% else %}
-                <p >Welcome, Student {{ user.username }}!</p>
+                <p >Welcome, Student {{ user.username }} 👋</p>
                 <img src="/static/home/images/Student.png">
             {% endif %}
         {% else %}
