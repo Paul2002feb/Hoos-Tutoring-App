@@ -22,6 +22,7 @@
 <h2 class="containerizer">Results:</h2>
 <table class="containering">
   <tr>
+    <th class="text-center styled-header">Courses</th>
     <th class="text-center styled-header">Tutor Name</th>
     <th class="text-center styled-header">Major</th>
     <th class="text-center styled-header">Pay Rate</th>
@@ -30,6 +31,7 @@
   </tr >
   {% for tutor in tutor_list %} {% if tutor.is_tutor %}
   <tr >
+    <td class="text-center styled-header">{{ tutor.classes }}</td>
     <td class="text-center styled-header">{{ tutor.full_name }}</td>
     <td class="text-center styled-header">{{ tutor.major }}</td>
     <td class="text-center styled-header">{{ tutor.pay_rate }}</td>

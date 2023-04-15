@@ -17,9 +17,11 @@
       {% if user.is_authenticated %}
       {% with tutoring_user=user.tutoringuser %}
       {% if tutoring_user %}
-      <li class="nav-item {% if request.path == '/notification/' %}active{% endif %}" style="list-style-type: none;">
+
+      {% comment %} <li class="nav-item {% if request.path == '/notification/' %}active{% endif %}" style="list-style-type: none;">
           <a class="nav-link" href='/notification/'>Notifications</a>
-      </li>
+      </li> {% endcomment %}
+
       {% if tutoring_user.is_tutor %}
       <li class="nav-item {% if request.path == '/schedule/' %}active{% endif %}" style="list-style-type: none;">
           <a class="nav-link" href='/schedule/'>Schedule</a>
