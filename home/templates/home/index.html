@@ -29,6 +29,15 @@
         {% endif %}
     {% endwith %}
 {% endif %}
+
+{% if not user.is_authenticated %}
+
+    <img src="/static/home/images/SmartGrades.png" 
+    width="575" 
+    height="450">
+{% endif %}
+
+
 </div>
 
 {% endblock %}

@@ -1,6 +1,12 @@
 {% extends "home/navbar.html" %} {% block page %}
 <form action="/tutorsearch" method="GET" class="containering">
-  <label for="search-input" class="somecss">Tutor Search:</label>
+  <!-- <label for="search-input" class="somecss">Tutor Search:</label> -->
+  <!-- <div class="centeringnomargin"> -->
+
+    <img src="/static/home/images/Search.png" 
+      width="400" 
+      height="200">
+  <!-- </div> -->
 
   <input
     type="text"
@@ -13,7 +19,7 @@
 
   <div class="row h-5 justify-content-center align-items-center">
     <!-- <div class="col-auto"> -->
-    <button class="btn btn-primary" type="submit">Search</button>
+    <button class="btn btn-primary" style="background-color:#523A28" type="submit">Search</button>
 
     <!-- </div> -->
   </div>

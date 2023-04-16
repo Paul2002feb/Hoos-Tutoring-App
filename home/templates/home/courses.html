@@ -5,10 +5,16 @@
 </head>
 <form action='/profile/course/' method="GET">
     {% csrf_token %}
-    <label for="search-input" class="somecss">Course Search:</label>
+    <!-- <label for="search-input" class="somecss">Course Search:</label> -->
+    <div class="centeringnomargin">
+
+        <img src="/static/home/images/Courses.png" 
+          width="400" 
+          height="250">
+      </div>
     <input type="text" class="form-control" id="search-input" name="search-input" placeholder="Search for courses..." required><br><br>
     <div class="row h-5 justify-content-center align-items-center">
-        <button class="btn btn-primary" type="submit">Search</button>
+        <button class="btn btn-primary" type="submit" style="background-color:#523A28" class="white">Search</button>
     </div>
 </form>
 {% if courses %}
@@ -34,7 +40,7 @@
             {% endfor %}
         </table>
         <div class="row h-5 justify-content-center align-items-center">
-            <button class="btn btn-primary" type="submit">Add Selected Courses</button>
+            <button class="btn btn-primary" type="submit" style="background-color:#523A28" class="white">Add Selected Courses</button>
         </div>
     </form>
 {% endif %}
