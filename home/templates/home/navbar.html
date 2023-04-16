@@ -26,14 +26,14 @@
       <li class="nav-item {% if request.path == '/schedule/' %}active{% endif %}" style="list-style-type: none;">
           <a class="nav-link" href='/schedule/'>Schedule</a>
       </li>
+      <li class="nav-item {% if request.path == '/profile/' %}active{% endif %}" style="list-style-type: none;">
+        <a class="nav-link" href= '/profile/'>Profile</a>
+     </li>
       {% else %}
       <li class="nav-item {% if request.path == '/tutorsearch' %}active{% endif %}" style="list-style-type: none;">
         <a class="nav-link" href='/tutorsearch'>Tutor Search</a>
       </li>
       {% endif %}
-      <li class="nav-item {% if request.path == '/profile/' %}active{% endif %}" style="list-style-type: none;">
-          <a class="nav-link" href= '/profile/'>Profile</a>
-      </li>
       <li class="nav-item {% if request.path == '/requestlist' %}active{% endif %}" style="list-style-type: none;">
         <a class="nav-link" href="/requestlist"> Requests </a>
       </li>

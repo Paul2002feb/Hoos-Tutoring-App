@@ -119,41 +119,50 @@ def view_requests(request):
                     
 
 def search_courses(request):
-    tutoring_user = request.user.tutoringuser
-    if request.method == 'GET':
-        input = request.GET.get('search-input')
-        if input is None:
-            return render(request, 'home/courses.html', {'courses': []})
+    try:
+        tutoring_user = request.user.tutoringuser
+        if request.method == 'GET':
+            input = request.GET.get('search-input')
+            if input is None:
+                return render(request, 'home/courses.html', {'courses': []})
+            else:
+                input_args = input.split()
+                len_input = len(input_args)
+                if len_input == 1:
+                    subject = input_args[0].upper()
+                    url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject={subject}'
+                    r = requests.get(url)
+                elif len_input == 2:
+                    department = input_args[0]
+                    department = department.upper()
+                    mneomonic = input_args[1]
+                    url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject={department}&catalog_nbr={mneomonic}'
+                    r = requests.get(url)
+                else:  
+                    name = input.replace(" ","+")
+                    url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&keyword={name}'
+                    r = requests.get(url)
+                    
+                courses = r.json()
+                course_descrs = []
+                unique_courses = []
+                for course in courses:
+                    if course['descr'] not in course_descrs:
+                        unique_courses.append(course)
+                        course_descrs.append(course['descr'])
+                return render(request, 'home/courses.html', {'courses': unique_courses})
+        elif request.method == 'POST': 
+            print("add is being clicked")
+            selected_courses = request.POST.getlist('selected_courses')
+            for course in selected_courses:
+                tutoring_user.classes.append(course)
+            tutoring_user.save()
+            return HttpResponseRedirect('/profile/')
         else:
-            input_args = input.split()
-            len_input = len(input_args)
-            if len_input == 1:
-                course_num = input_args[0]
-                url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&class_nbr={course_num}'
-                r = requests.get(url)
-            elif len_input == 2:  # Use 'elif' instead of 'if' for multiple conditions
-                department = input_args[0]
-                department = department.upper()
-                mneomonic = input_args[1]
-                url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject={department}&catalog_nbr={mneomonic}'
-                r = requests.get(url)
-            else:  
-                name = input.replace(" ","+")
-                url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&keyword={name}'
-                r = requests.get(url)
-                
-            courses = r.json()
-            return render(request, 'home/courses.html', {'courses': courses})
-    
-    elif request.method == 'POST': 
-        print("add is being clicked")
-        selected_courses = request.POST.getlist('selected_courses')
-        for course in selected_courses:
-            tutoring_user.classes.append(course)
-        tutoring_user.save()
-        return HttpResponseRedirect('/profile/')
-    else:
-        return render(request, 'home/courses.html', {'courses': []})
+            return render(request, 'home/courses.html', {'courses': []})   
+    except Exception as e:
+        print(e)
+        raise e
 
 class IndexView(generic.ListView):
     template_name = 'home/index.html'
@@ -183,6 +192,7 @@ def edit_profile(request):
         is_virtual = request.POST.get('is_virtual')
         new_location = request.POST.get('new_location') 
         locations_to_remove = request.POST.getlist('remove_location')
+        classes_to_remove = request.POST.getlist('remove_classes')
         if 'is_virtual' in request.POST and request.POST['is_virtual'] == 'true':
             is_virtual = True
         else:
@@ -194,6 +204,10 @@ def edit_profile(request):
         if locations_to_remove:
             for location in locations_to_remove:
                 tutoring_user.locations.remove(location)
+        
+        if classes_to_remove:
+            for course in classes_to_remove:
+                tutoring_user.classes.remove(course)
 
         # Update the TutoringUser object with the new values
         TutoringUser.objects.filter(pk=tutoring_user.pk).update(
@@ -201,7 +215,8 @@ def edit_profile(request):
             major=major,
             pay_rate=pay_rate,
             is_virtual=is_virtual,
-            locations=tutoring_user.locations
+            locations=tutoring_user.locations,
+            classes=tutoring_user.classes
         )
 
         return HttpResponseRedirect('/profile/')
@@ -212,6 +227,7 @@ def edit_profile(request):
             'pay_rate': tutoring_user.pay_rate,
             'is_virtual': tutoring_user.is_virtual,
             'locations': tutoring_user.locations,
+            'classes': tutoring_user.classes,
         }
         form = TutorForm(initial=form_data)
 
