@@ -38,8 +38,8 @@
         <form action="" method="POST" >
             {% csrf_token %}
             <input type="hidden" name="request_id" value="{{ request.id }}">
-            <button type="submit" name="status" value="approved">Accept</button>
-            <button type="submit" name="status" value="rejected">Reject</button>
+            <button type="submit" name="status" value="approved" class="button-60" style="color:white">Accept</button>
+            <button type="submit" name="status" value="rejected" class="button-60" style="color:white">Reject</button>
         </form>
         {% else %}
         <p></p>
