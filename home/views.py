@@ -35,7 +35,6 @@ def search_tutors(request):
     if request.method == 'POST':
         tutor_id = request.POST.get('tutor_id')
         tutor = TutoringUser.objects.filter(id=tutor_id).first()
-        print(tutor.user,'diwhefidwj')
         if tutor:
             session_date = request.POST.get('session_date')
             session_time = request.POST.get('session_time')
@@ -66,7 +65,6 @@ def search_tutors(request):
             tutor_list = TutoringUser.objects.filter(
                 Q(full_name__icontains=input) | Q(pay_rate__icontains=input) | Q(major__icontains=input) | Q(classes__icontains=input)
             )
-            print(tutor_list)
             return render(request, 'home/tutorsearch.html', {'tutor_list': tutor_list})
     return render(request,'home/tutorsearch.html')
 
@@ -129,9 +127,12 @@ def search_courses(request):
                 input_args = input.split()
                 len_input = len(input_args)
                 if len_input == 1:
-                    subject = input_args[0].upper()
-                    url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject={subject}'
+                    course_num = input_args[0]
+                    url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&class_nbr={course_num}'
                     r = requests.get(url)
+                    # subject = input_args[0].upper()
+                    # url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject={subject}'
+                    # r = requests.get(url)
                 elif len_input == 2:
                     department = input_args[0]
                     department = department.upper()

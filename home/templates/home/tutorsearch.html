@@ -37,7 +37,6 @@
   </tr >
   {% for tutor in tutor_list %} {% if tutor.is_tutor %}
   <tr >
-    <td class="text-center styled-header">{{ tutor.classes }}</td>
     <td class="text-center styled-header">{{ tutor.full_name }}</td>
     <td class="text-center styled-header">{{ tutor.major }}</td>
     <td class="text-center styled-header">
@@ -53,22 +52,26 @@
       <form action="" method="POST">
         {% csrf_token %}
         <input type="hidden" name="tutor_id" value="{{ tutor.id }}" />
+        <label for="session_date">Date:</label>
         <select name="session_date" required>
           {% for slot in tutor.tutorSession %}
               <option value="{{ slot.date }}">{{ slot.date }}</option>
           {% endfor %}
-      </select>
-      <select name="session_time" required>
+        </select>
+        <label for="session_date">Time:</label>
+        <select name="session_time" required>
         {% for slot in tutor.tutorSession %}
             <option value="{{ slot.time }}">{{ slot.time }}</option>
         {% endfor %}
-    </select>
+      </select>
       <!-- <select name="session_size" required>
         {% for slot in tutor.tutorSession %}
             <option value="{{ slot.session_length }}">{{ slot.session_length }}min,</option>
         {% endfor %}
-    </select> -->
-    <input style="width:4rem" type="number" name="session_size" min="0" step="0.01" required />
+       </select> -->
+       <label for="session_size">Duration (minutes):</label>
+      <input style="width:4rem" type="number" name="session_size" min="0" step="0.01" required />
+      <label for="session_size">Notes:</label>
        <input type="text" name="description"  required />
         <button type="submit">Request</button>
       </form>
