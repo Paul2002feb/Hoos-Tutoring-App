@@ -1,41 +1,5 @@
-{% load bootstrap5 %}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
-{% bootstrap_messages %}
-{% load static %}
-<head>
-    <link rel="stylesheet" href="{% static 'home/style.css' %}">
-</head>
-<body>
-  <div class="navbar-container">
-      <nav class="navbar">
-      <ul class="navbar navbar-expand-sm fixed-top">
-      <li class="nav-item {% if request.path == '/' %}active{% endif %}" style="list-style-type: none;">
-          <a class="nav-link" href='/'>Home</a>
-      </li>
-      <li class="nav-item {% if request.path == '/notification/' %}active{% endif %}" style="list-style-type: none;">
-          <a class="nav-link" href='/notification/'>Notifications</a>
-      </li>
-      <li class="nav-item {% if request.path == '/schedule/' %}active{% endif %}" style="list-style-type: none;">
-          <a class="nav-link" href='/schedule/'>Schedule</a>
-      </li>
-      <li class="nav-item {% if request.path == '/profile/' %}active{% endif %}" style="list-style-type: none;">
-          <a class="nav-link" href= '/profile/'>Profile</a>
-      </li>
-      {% if user.is_authenticated %}
-      <li class="nav-item {% if request.path == '/requestlist' %}active{% endif %}" style="list-style-type: none;">
-        <a class="nav-link" href="/requestlist"> Requests </a>
-      </li>
-      {% endif %}
-      <li class="nav-item {% if request.path == '/login' %}active{% endif %}" style="list-style-type: none;">
-          {% if user.is_authenticated %}
-          <a class="nav-link" href="/accounts/logout"> Logout </a>
-          {% else %}
-          <a class="nav-link" href="/login">Sign Up/Sign In</a>
-          {% endif %}
-      </li>
-      </nav>
-  </div>
+{% extends "home/navbar.html" %}
+{% block page %}
   <div id='calendar'></div>
   <meta charset="utf-8">
   <title>Availability Calendar</title>
@@ -58,18 +22,7 @@
         selectHelper: true,
         // Add events to calendar
         events: [
-          {
-            title: 'Available',
-            start: '2023-03-20T09:00:00',
-            end: '2023-03-20T11:00:00',
-            color: 'green'
-          },
-          {
-            title: 'Busy',
-            start: '2023-03-23T10:00:00',
-            end: '2023-03-23T12:00:00',
-            color: 'red'
-          }
+          
         ],
         // Handle selecting a time slot
         select: function(start, end) {
@@ -105,3 +58,4 @@
   {% load static %}
   <link rel="stylesheet" href="{% static 'home/style.css' %}">
 </body>
+{% endblock %}
