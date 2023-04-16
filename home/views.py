@@ -143,7 +143,13 @@ def search_courses(request):
                 r = requests.get(url)
                 
             courses = r.json()
-            return render(request, 'home/courses.html', {'courses': courses})
+            course_descrs = []
+            unique_courses = []
+            for course in courses:
+                if course['descr'] not in course_descrs:
+                    unique_courses.append(course)
+                    course_descrs.append(course['descr'])
+            return render(request, 'home/courses.html', {'courses': unique_courses})
     
     elif request.method == 'POST': 
         print("add is being clicked")
@@ -183,6 +189,7 @@ def edit_profile(request):
         is_virtual = request.POST.get('is_virtual')
         new_location = request.POST.get('new_location') 
         locations_to_remove = request.POST.getlist('remove_location')
+        classes_to_remove = request.POST.getlist('remove_classes')
         if 'is_virtual' in request.POST and request.POST['is_virtual'] == 'true':
             is_virtual = True
         else:
@@ -194,6 +201,10 @@ def edit_profile(request):
         if locations_to_remove:
             for location in locations_to_remove:
                 tutoring_user.locations.remove(location)
+        
+        if classes_to_remove:
+            for course in classes_to_remove:
+                tutoring_user.classes.remove(course)
 
         # Update the TutoringUser object with the new values
         TutoringUser.objects.filter(pk=tutoring_user.pk).update(
@@ -201,7 +212,8 @@ def edit_profile(request):
             major=major,
             pay_rate=pay_rate,
             is_virtual=is_virtual,
-            locations=tutoring_user.locations
+            locations=tutoring_user.locations,
+            classes=tutoring_user.classes
         )
 
         return HttpResponseRedirect('/profile/')
@@ -212,6 +224,7 @@ def edit_profile(request):
             'pay_rate': tutoring_user.pay_rate,
             'is_virtual': tutoring_user.is_virtual,
             'locations': tutoring_user.locations,
+            'classes': tutoring_user.classes,
         }
         form = TutorForm(initial=form_data)
 

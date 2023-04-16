@@ -10,7 +10,9 @@
         <p>
             <strong>Location Preference:</strong>
             {% for location in tutoring_user.locations %}
-                {{location}}, 
+                <li>
+                {{location}}
+                </li>
             {% endfor %}
         </p>
         <p>
@@ -47,11 +49,10 @@
         <p>
             <strong>Courses Tutored:</strong>
             {% for course in tutoring_user.classes %}
-                {{ course.subject }} {{ course.catalog_nbr }} {{ course }},
+                <li>
+                {{ course.subject }} {{ course.catalog_nbr }} {{ course }}
+                </li>
             {% endfor %}
-            <a href='/profile/course/'>
-                <button style="background-color:#523A28" class="white">Select Courses</button>
-            </a>
         </p>
         {% endif %}
     </div>
