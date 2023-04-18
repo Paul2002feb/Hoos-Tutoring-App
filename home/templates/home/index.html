@@ -17,14 +17,52 @@
     {% with tutoring_user=user.tutoringuser %}
         {% if tutoring_user %}
             {% if tutoring_user.is_tutor %}
-                <p>Welcome, Tutor {{ user.username }} 👋</p>
+
+            <head>
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Play&display=swap');
+                </style>
+            </head>
+            <body>
+                <div class="ten">
+                    <div class="text-center">
+                        <h3 class="typing"> Welcome, Tutor {{ user.username }} 👋</h3>     
+                    </div>
+                </div>
+            </body>
+                
                 <img src="/static/home/images/Welcome.png">
             {% else %}
-                <p >Welcome, Student {{ user.username }} 👋</p>
+            <head>
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Play&display=swap');
+                </style>
+            </head>
+            <body>
+                <div class="ten">
+                    <div class="text-center">
+                        <h3 class="typing"> Welcome, Student     {{ user.username }} 👋</h3>     
+                    </div>
+                </div>
+            </body>
                 <img src="/static/home/images/Student.png">
             {% endif %}
         {% else %}
-            <a href="/tutorform" id="anchor">Set Up Tutoring Account</a>
+            
+            <head>
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Play&display=swap');
+                </style>
+            </head>
+            <body>
+                <div class="wrapper four">
+                    <div class="type">
+                        <h3 class="typing"> Click Below!</h3>
+                        
+                    </div>
+                    <a href="/tutorform" id="anchor" class="typing">Set Up Your Account</a>
+                </div>
+            </body>
             
         {% endif %}
     {% endwith %}

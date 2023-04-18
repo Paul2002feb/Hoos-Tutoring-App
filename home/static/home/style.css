@@ -258,3 +258,86 @@ body {
   /* margin-left: 30px; */
   margin-top: -30px;
 }
+
+.wrapper.four {
+  /* background-color: #9ba5b4; */
+  font-size: 1.5rem;
+  /* font-family: "Play", Arial, sans-serif; */
+  font-family: Arial, Helvetica, sans-serif;
+  /* font-size: 10px; */
+  font-weight: bold;
+}
+.four .type {
+  padding: 2rem 1rem;
+  width: auto;
+  margin: auto;
+}
+.four h3 {
+  width: 10ch;
+  border-right: 4px solid black;
+  margin: 2rem auto;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 2s steps(13, end),
+    blink-caret 0.5s step-end infinite alternate;
+}
+
+.wrapper.seven {
+  /* background-color: #9ba5b4; */
+  font-size: 1.5rem;
+  /* font-family: "Play", Arial, sans-serif; */
+  font-family: Arial, Helvetica, sans-serif;
+  /* font-size: 10px; */
+  font-weight: bold;
+}
+.seven .type {
+  padding: 2rem 1rem;
+  width: auto;
+  margin: auto;
+}
+.seven h3 {
+  width: 24ch;
+  border-right: 4px solid #523a28;
+  margin: 2rem auto;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 2.5s steps(15, end),
+    blink-caret 0.5s step-end infinite alternate;
+}
+
+.wrapper.ten {
+  /* background-color: #9ba5b4; */
+  /* font-size: 10rem; */
+  /* font-family: "Play", Arial, sans-serif; */
+  font-family: Arial, Helvetica, sans-serif;
+  /* font-size: 10%; */
+  font-size: 3.5rem;
+  font-weight: bold;
+}
+.ten .type {
+  /* padding: 2rem 1rem; */
+  width: auto;
+  margin: auto;
+  /* font-size: 10%; */
+}
+
+.ten h3 {
+  width: 24ch;
+  border-right: 4px solid #523a28;
+  margin: 2rem auto;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 2.5s steps(15, end),
+    blink-caret 0.5s step-end infinite alternate;
+}
+
+@-webkit-keyframes typing {
+  from {
+    width: 0;
+  }
+}
+@-webkit-keyframes blink-caret {
+  50% {
+    border-color: transparent;
+  }
+}
