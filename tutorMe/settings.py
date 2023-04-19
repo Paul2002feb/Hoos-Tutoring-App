@@ -57,7 +57,6 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'csp.middleware.CSPMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -107,50 +106,6 @@ SECURE_SSL_REDIRECT = True
 SECURE_HSTS_SECONDS = 15724800
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
-
-# uri to report policy violations
-# uri to report policy violations
-CSP_REPORT_URI = '<add your reporting uri>'
-  
-# default source as self
-CSP_DEFAULT_SRC = ("'self'", )
-  
-# style from our domain and bootstrapcdn
-CSP_STYLE_SRC = ("'self'", 
-    "stackpath.bootstrapcdn.com")
-  
-# scripts from our domain and other domains
-CSP_SCRIPT_SRC = ("'self'",
-    "ajax.cloudflare.com",
-    "static.cloudflareinsights.com",
-    "www.google-analytics.com",
-    "ssl.google-analytics.com",
-    "cdn.ampproject.org",
-    "www.googletagservices.com",
-    "pagead2.googlesyndication.com")
-  
-# images from our domain and other domains
-CSP_IMG_SRC = ("'self'",
-    "www.google-analytics.com",
-    "raw.githubusercontent.com",
-    "googleads.g.doubleclick.net")
-  
-# loading manifest, workers, frames, etc
-CSP_FONT_SRC = ("'self'", )
-CSP_CONNECT_SRC = ("'self'", 
-    "www.google-analytics.com" )
-CSP_OBJECT_SRC = ("'self'", )
-CSP_BASE_URI = ("'self'", )
-CSP_FRAME_ANCESTORS = ("'self'", )
-CSP_FORM_ACTION = ("'self'", )
-CSP_INCLUDE_NONCE_IN = ('script-src', )
-CSP_MANIFEST_SRC = ("'self'", )
-CSP_WORKER_SRC = ("'self'", )
-CSP_MEDIA_SRC = ("'self'", )
-
-## X-XSS-Protection
-SECURE_BROWSER_XSS_FILTER = True
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
