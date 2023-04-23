@@ -25,7 +25,7 @@ class TutoringUser(models.Model):
         ('CLAS', 'Classics'),
         ('COGS', 'Cognitive Science'),
         ('COMM', 'Commerce'),
-        ('', 'Comparative Literature'),
+        ('CPL', 'Comparative Literature'),
         ('CPE', 'Computer Engineering'),
         ('CS', 'Computer Science (B.A.)'),
         # ('', 'Computer Science (B.S.)'),
