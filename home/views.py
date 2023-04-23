@@ -131,9 +131,13 @@ def search_courses(request):
             title = request.GET.get('title')
             instr = request.GET.get('instructor')
             print(title)
-            if class_num is None:
+            if class_num == "":
                 nquery = ""
             else:
+                try:
+                    int(class_num)
+                except:
+                    return render(request, 'home/courses.html', {'courses': []})
                 nquery = "&class_nbr=" + class_num
             
             if subject is None:
@@ -156,14 +160,10 @@ def search_courses(request):
             else:
                 iquery = "&instructor_name=" + instr
             
-            print(nquery)
-            print(tquery)
-            print(len(nquery+squery+cquery+tquery+iquery))
+            # print(nquery)
+            # print(tquery)
+            # print(len(nquery+squery+cquery+tquery+iquery))
             
-            try: 
-                int(class_num)
-            except:
-                return render(request, 'home/courses.html', {'courses': []})
             # if not isinstance(class_num, int):
             #     return render(request, 'home/courses.html', {'courses': []})
             if len(nquery+squery+cquery+tquery+iquery) == 0:
@@ -171,14 +171,14 @@ def search_courses(request):
             else:
                 url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&page=1{nquery}{squery}{cquery}{tquery}{iquery}'
                 r = requests.get(url)
-                print(url)
+                # print(url)
                 courses = r.json()
                 courses1 = []
                 course_descrs = []
                 unique_courses = []
 
                 for course in courses:
-                    print(course)
+                    # print(course)
                     if class_num == course['class_nbr']:
                         courses1.append(course)
                     elif subject == course['subject']:
