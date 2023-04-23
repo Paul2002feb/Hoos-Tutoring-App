@@ -160,8 +160,12 @@ def search_courses(request):
             print(tquery)
             print(len(nquery+squery+cquery+tquery+iquery))
             
-            if not isinstance(class_num, int):
+            try: 
+                int(class_num)
+            except:
                 return render(request, 'home/courses.html', {'courses': []})
+            # if not isinstance(class_num, int):
+            #     return render(request, 'home/courses.html', {'courses': []})
             if len(nquery+squery+cquery+tquery+iquery) == 0:
                 return render(request, 'home/courses.html', {'courses': []})
             else:
