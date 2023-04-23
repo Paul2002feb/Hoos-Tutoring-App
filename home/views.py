@@ -119,38 +119,79 @@ def search_courses(request):
     try:
         tutoring_user = request.user.tutoringuser
         if request.method == 'GET':
-            input = request.GET.get('search-input')
-            if input is None:
+            # input = request.GET.get('search-input')
+            # class_num = ""
+            # subject = ""
+            # course_code = ""
+            # title = ""
+            # instr = ""
+            class_num = request.GET.get('class-number')
+            subject = request.GET.get('subject')
+            course_code = request.GET.get('course-code')
+            title = request.GET.get('title')
+            instr = request.GET.get('instructor')
+            print(title)
+            if class_num is None:
+                nquery = ""
+            else:
+                nquery = "&class_nbr=" + class_num
+            
+            if subject is None:
+                squery = ""
+            else: 
+                squery = "&subject=" + subject
+
+            if course_code is None:
+                cquery = ""
+            else:
+                cquery = "&catalog_nbr=" + course_code
+
+            if title is None:
+                tquery = ""
+            else:
+                tquery = "&keyword=" + title
+
+            if instr is None:
+                iquery = ""
+            else:
+                iquery = "&instructor_name=" + instr
+            
+            print(nquery)
+            print(tquery)
+            print(len(nquery+squery+cquery+tquery+iquery))
+            
+            if not isinstance(class_num, int):
+                return render(request, 'home/courses.html', {'courses': []})
+            if len(nquery+squery+cquery+tquery+iquery) == 0:
                 return render(request, 'home/courses.html', {'courses': []})
             else:
-                input_args = input.split()
-                len_input = len(input_args)
-                if len_input == 1:
-                    course_num = input_args[0]
-                    url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&class_nbr={course_num}'
-                    r = requests.get(url)
-                    # subject = input_args[0].upper()
-                    # url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject={subject}'
-                    # r = requests.get(url)
-                elif len_input == 2:
-                    department = input_args[0]
-                    department = department.upper()
-                    mneomonic = input_args[1]
-                    url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject={department}&catalog_nbr={mneomonic}'
-                    r = requests.get(url)
-                else:  
-                    name = input.replace(" ","+")
-                    url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&keyword={name}'
-                    r = requests.get(url)
-                    
+                url = f'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&page=1{nquery}{squery}{cquery}{tquery}{iquery}'
+                r = requests.get(url)
+                print(url)
                 courses = r.json()
+                courses1 = []
                 course_descrs = []
                 unique_courses = []
+
                 for course in courses:
+                    print(course)
+                    if class_num == course['class_nbr']:
+                        courses1.append(course)
+                    elif subject == course['subject']:
+                        courses1.append(course)
+                    elif course_code == course['catalog_nbr']:
+                        courses1.append(course)
+                    elif title in course['descr']:
+                        courses1.append(course)
+                    elif instr in course['meetings'][0]['instructor']:
+                        courses1.append(course)
+
+                for course in courses1:
                     if course['descr'] not in course_descrs:
                         unique_courses.append(course)
                         course_descrs.append(course['descr'])
                 return render(request, 'home/courses.html', {'courses': unique_courses})
+            
         elif request.method == 'POST': 
             print("add is being clicked")
             selected_courses = request.POST.getlist('selected_courses')
@@ -163,7 +204,7 @@ def search_courses(request):
     except Exception as e:
         print(e)
         raise e
-
+    
 class IndexView(generic.ListView):
     template_name = 'home/index.html'
 
