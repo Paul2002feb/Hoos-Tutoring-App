@@ -55,16 +55,16 @@
         <label for="session_date">Date:</label>
         <select name="session_date" required>
           {% for slot in tutor.tutorSession %}
-              <option value="{{ slot.date }}">{{ slot.date }}</option>
+              <option value="{{ slot.date }} {{ slot.time }}">{{ slot.date }} {{ slot.time }}</option>
           {% endfor %}
         </select>
-        <label for="session_date">Time:</label>
+        <!-- <label for="session_date">Time:</label>
         <select name="session_time" required>
         {% for slot in tutor.tutorSession %}
             <option value="{{ slot.time }}">{{ slot.time }}</option>
         {% endfor %}
       </select>
-      <!-- <select name="session_size" required>
+      <select name="session_size" required>
         {% for slot in tutor.tutorSession %}
             <option value="{{ slot.session_length }}">{{ slot.session_length }}min,</option>
         {% endfor %}

@@ -36,8 +36,10 @@ def search_tutors(request):
         tutor_id = request.POST.get('tutor_id')
         tutor = TutoringUser.objects.filter(id=tutor_id).first()
         if tutor:
-            session_date = request.POST.get('session_date')
-            session_time = request.POST.get('session_time')
+            session_date_time = request.POST.get('session_date')
+            date_time = session_date_time.split()
+            session_date = date_time[0]
+            session_time = date_time[1]
             session_duration = request.POST.get('session_size')
             description = request.POST.get('description')
             student = request.user
@@ -67,8 +69,6 @@ def search_tutors(request):
             )
             return render(request, 'home/tutorsearch.html', {'tutor_list': tutor_list})
     return render(request,'home/tutorsearch.html')
-
-
 
 def view_requests(request):
     my_user = TutoringUser.objects.filter(user=request.user).first()
@@ -115,7 +115,6 @@ def view_requests(request):
                 pass  # Handle case where request_id does not exist
                 print('pass')
                     
-
 def search_courses(request):
     try:
         tutoring_user = request.user.tutoringuser
@@ -233,7 +232,6 @@ def edit_profile(request):
         form = TutorForm(initial=form_data)
 
     return render(request, 'home/editprofile.html', {'form': form, 'tutoring_user': tutoring_user})
-
 
 def add_availability(request):
     if request.method == 'POST':
