@@ -53,11 +53,11 @@ def search_tutors(request):
                 description=description,
                 status='pending'
             )
-            print(tutor_request)
+            # print(tutor_request)
             tutor_request.save()
             return redirect('/requestlist')  # replace with the appropriate URL for the student dashboard
         else:
-            print('failed')
+            # print('failed')
             return render(request, 'home/tutorsearch.html', {'error': 'Tutor not found'})
     elif request.method == 'GET':
         input = request.GET.get('search-input')
@@ -72,34 +72,34 @@ def search_tutors(request):
 
 def view_requests(request):
     my_user = TutoringUser.objects.filter(user=request.user).first()
-    print(my_user.is_tutor)
+    # print(my_user.is_tutor)
     if my_user.is_tutor == True:
         if request.method == 'GET':
             # request_list = TutorRequest.objects.get(request_user=request.user.username)
             request_list = TutorRequest.objects.filter(tutor=request.user)
-            print(request_list,'udgwgduwgf')
+            # print(request_list,'udgwgduwgf')
             return render(request,'home/requestIndex.html', {'request_list' : request_list})
         
         if request.method == 'POST':
             request_id = request.POST.get('request_id')
-            print(request_id)
+            # print(request_id)
             status = request.POST.get('status')
             try:
                 tutor_request = TutorRequest.objects.get(id=request_id)
                 # Update the status of the tutor_request
                 tutor_request.status = status
                 tutor_request.save() 
-                print(tutor_request.status)
+                # print(tutor_request.status)
                 return redirect("/requestlist")  # Redirect to the request list page after successful update
             except TutorRequest.DoesNotExist:
-                print('pass')
+                # print('pass')
                 pass  # Handle case where request_id does not exist
-                print('pass')
+                # print('pass')
     elif my_user.is_tutor == False:
         if request.method == 'GET':
             # request_list = TutorRequest.objects.get(request_user=request.user.username)
             request_list = TutorRequest.objects.filter(student=request.user)
-            print(request_list,'udgwgduwgf')
+            # print(request_list,'udgwgduwgf')
             return render(request,'home/requestIndex.html', {'request_list' : request_list})
         
         if request.method == 'PUT':
@@ -113,7 +113,7 @@ def view_requests(request):
                 return redirect(request,'home/requestIndex.html')  # Redirect to the request list page after successful update
             except TutorRequest.DoesNotExist:
                 pass  # Handle case where request_id does not exist
-                print('pass')
+                # print('pass')
                     
 def search_courses(request):
     try:
@@ -130,7 +130,7 @@ def search_courses(request):
             course_code = request.GET.get('course-code')
             title = request.GET.get('title')
             instr = request.GET.get('instructor')
-            print(title)
+            # print(title)
             if class_num == "":
                 nquery = ""
             else:
@@ -191,13 +191,14 @@ def search_courses(request):
                         courses1.append(course)
 
                 for course in courses1:
-                    if course['descr'] not in course_descrs:
+                    class_label = course['subject']+" "+course['catalog_nbr']+" "+course['descr']
+                    if course['descr'] not in course_descrs and class_label not in tutoring_user.classes:
                         unique_courses.append(course)
                         course_descrs.append(course['descr'])
                 return render(request, 'home/courses.html', {'courses': unique_courses})
             
         elif request.method == 'POST': 
-            print("add is being clicked")
+            # print("add is being clicked")
             selected_courses = request.POST.getlist('selected_courses')
             for course in selected_courses:
                 tutoring_user.classes.append(course)
@@ -292,11 +293,11 @@ def add_availability(request):
 
         # Save the updated TutoringUser object
         tutor.save()
-        print(tutor)
+        # print(tutor)
         return redirect('/profile/') 
     else:
         tutor = TutoringUser.objects.get(user=request.user)
         available_slots = tutor.get_availability()
-        print(available_slots)
+        # print(available_slots)
        
         return render(request, 'home/availability.html')  
