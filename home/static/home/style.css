@@ -1146,7 +1146,7 @@ body {
 
 table {
   width: 100%;
-  border-collapse: separate;
+  /* border-collapse: separate; */
   border-spacing: 0;
   font-family: Arial, sans-serif;
   
@@ -1154,7 +1154,7 @@ table {
 th, td {
   padding: 8px;
   text-align: left;
-  position: relative;
+  /* position: relative; */
 }
 th {
   background-color: #78553b;
