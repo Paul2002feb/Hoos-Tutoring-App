@@ -24,7 +24,7 @@
     </div>
 </form>
 {% if courses %}
-    <h2 class="coursesearch">Results:</h2>
+    <h2 class="coursesearch" style="margin-top: 2%;" style="margin-bottom: 2%;">Results:</h2>
     <form action='/profile/course/' method="POST">
         {% csrf_token %}
         <table class="coursesearch">

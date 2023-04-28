@@ -11,7 +11,7 @@
     {% block body %}
 
     {% if messages %}
-    <div>
+    <div >
       <strong>Messages:</strong>
       <ul>
         {% for message in messages %}
@@ -21,7 +21,7 @@
     </div>
     {% endif %}
 
-    <div>
+    <div >
       <strong>Menu:</strong>
       <ul>
         {% if user.is_authenticated %}
@@ -32,7 +32,7 @@
         <li><a href="/login">Sign Up</a></li>
         {% endif %}
       </ul>
-    </div>
+    </div style="background-color: green;">
     {% block content %}
     {% endblock %}
     {% endblock %}

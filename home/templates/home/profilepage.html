@@ -26,10 +26,10 @@
     {% if tutoring_user.is_tutor %}
         <p>
             <strong>Available Times:</strong>
-            <table class="paulcontainer">
+            <table class="paulcontainer" style="margin-left: -0%;">
                 <tr > 
-                    <th class="text-center styled-header">Date</th>
-                    <th class="text-center styled-header">Start Time</th>
+                    <th class="text-center styled-header" style="color: white;">Date</th>
+                    <th class="text-center styled-header" style="color: white;">Start Time</th>
                     <!-- <th class="text-center styled-header">Session Length</th> -->
                   </tr>
         {% for available in tutoring_user.tutorSession %}
