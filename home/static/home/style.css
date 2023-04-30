@@ -1704,5 +1704,38 @@ double the duration, but same velocity to show the elements only as the droid le
 
 
 
+.mydiv {
+  background-image: url(http://www.banques-en-ligne.fr/img/calculatrice-credit/background.svg);
+  background-repeat: repeat;
+  width: 90%;
+  height: 150%; 
+  position: absolute;
+  opacity: 0.03;
+  background-size: 314px;
+  background-position-y: -15px;
+  background-position-x: -15px;
+}
+
+/* Media query for tablets */
+@media (min-width: 768px) and (max-width: 600) {
+  .mydiv {
+    background-size: 250px; /* Adjust the background size */
+  }
+}
+
+/* Media query for small desktops */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .mydiv {
+    background-size: 200px; /* Adjust the background size */
+  }
+}
+
+/* Media query for large desktops */
+@media (min-width: 1200px) {
+  .mydiv {
+    background-size: 400px; /* Adjust the background size */
+  }
+}
+
 
 

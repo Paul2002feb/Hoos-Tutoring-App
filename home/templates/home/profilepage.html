@@ -3,7 +3,8 @@
 {% with tutoring_user=user.tutoringuser %}
     {% if tutoring_user %}
     <div class="container mt-4" style="text-align: center;">
-    <div class="row"  style="text-align: center;">
+    <div class="row"  style="text-align: center; ">
+        <div class="mydiv"></div>
     <h2>{{tutoring_user.full_name}}</h2>
         <p><strong>Major: </strong>{{tutoring_user.major}}</p>
         <p><strong>Hourly Rate:</strong> {{tutoring_user.pay_rate}}</p>
