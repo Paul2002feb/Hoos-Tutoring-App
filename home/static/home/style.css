@@ -52,16 +52,18 @@ body {
 
 /* Navbar links on hover */
 .navbar a:hover {
-  background-color: #ddd;
+  background-color: #c68f65;
+  transform: translate(5, 10);
+
   color: black;
 }
 
 /* Active/current navbar link */
-.active {
-  /* background-color: rgb(46, 141, 128); */
+/* .active {
+  background-color: rgb(46, 141, 128);
   background-color: #d0b49f;
   color: rgb(255, 255, 255);
-}
+} */
 
 .styled-header {
   align-self: center;
@@ -1696,6 +1698,11 @@ double the duration, but same velocity to show the elements only as the droid le
     transform: translateX(20px);
   }
 }
+
+
+
+
+
 
 
 
