@@ -1,4 +1,9 @@
-<div style="background-color: #d0b49f; display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+<div style="background: url(https://images.pexels.com/photos/32237/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)
+no-repeat center center;
+background-size: cover;
+height: 100%;
+position: absolute;
+width: 100%; display: flex; justify-content: center; align-items: center; min-height: 100vh;">
   <div style="width: 50%; background-color: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);" >
 {% extends "account/base.html" %}
 
@@ -112,7 +117,9 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
   <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-  <button class="primaryAction" type="submit" style="padding: 0.5rem 1rem; border: none; background-color: #4b2c2c; font-weight: bold; cursor: pointer; border-radius: 0.25rem;">{% trans "Sign In" %}</button>
+  <button class="primaryAction" type="submit" style="padding: 0.5rem 1rem; border: none; background: url(https://images.pexels.com/photos/32237/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)
+  no-repeat center center;
+  background-size: cover; font-weight: bold; cursor: pointer; border-radius: 0.25rem;">{% trans "Sign In" %}</button>
 </form>
 
 {% endblock %}
