@@ -230,6 +230,7 @@ def tutor(request):
     if request.method == 'POST':
         form = TutorForm(request.POST)
         if form.is_valid():
+            form.clean()
             form.save(commit=True)
             return HttpResponseRedirect('/')
     else:
