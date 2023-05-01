@@ -1,5 +1,5 @@
 <!-- http://127.0.0.1:8000/login Sign up Page-->
-<div style="background-color: beige; display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+<div style="background-color: #d0b49f; display: flex; justify-content: center; align-items: center; min-height: 100vh;">
   <div style="width: 50%; background-color: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);" >
 {% extends "home/baselogin.html" %}
 
@@ -115,7 +115,7 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-  <button class="primaryAction" type="submit" style="padding: 0.5rem 1rem; border: none; background-color: beige; font-weight: bold; cursor: pointer; border-radius: 0.25rem;">{% trans "Sign Up" %}</button>
+  <button class="primaryAction" type="submit" style="padding: 0.5rem 1rem; border: none; background-color: #4b2c2c; font-weight: bold; cursor: pointer; border-radius: 0.25rem;">{% trans "Sign Up" %}</button>
 </form>
 
 {% endblock %}
