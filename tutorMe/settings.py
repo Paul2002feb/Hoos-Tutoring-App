@@ -30,7 +30,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 
 SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
 
 # Application definition
 
@@ -99,13 +99,13 @@ DATABASES = {
 
 WHITENOISE_USE_FINDERS = True
 
-# # Redirect HTTP requests to HTTPS
-# SECURE_SSL_REDIRECT = True
+# Redirect HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = True
 
-# # Set the HSTS header to force all requests to use HTTPS for half a year
-# SECURE_HSTS_SECONDS = 15724800
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-# SECURE_HSTS_PRELOAD = True
+# Set the HSTS header to force all requests to use HTTPS for half a year
+SECURE_HSTS_SECONDS = 15724800
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
