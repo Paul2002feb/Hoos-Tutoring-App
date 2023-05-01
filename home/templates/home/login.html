@@ -1,3 +1,4 @@
+<!-- http://127.0.0.1:8000/login Sign up Page-->
 <div style="background-color: beige; display: flex; justify-content: center; align-items: center; min-height: 100vh;">
   <div style="width: 50%; background-color: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);" >
 {% extends "home/baselogin.html" %}
@@ -9,13 +10,86 @@
 
 {% block content %}
 
+
+
 <h1 style="text-align: center;">{% trans "Sign Up" %}</h1>
+
 
 {% get_providers as socialaccount_providers %}
 
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 1em;
+    color: #333;
+  }
+
+  .socialaccount_ballot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .socialaccount_providers {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+  }
+
+  .login-or {
+    font-size: 1.1em;
+    margin: 1em;
+    color: #777;
+  }
+
+  form.login {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  form.login input[type="email"],
+  form.login input[type="text"],
+  form.login input[type="password"] {
+    display: block;
+    width: 100%;
+    padding: 0.5em;
+    font-size: 1em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  form.login .secondaryAction {
+    float: right;
+    text-decoration: none;
+    color: #007bff;
+  }
+
+  form.login .primaryAction {
+    display: inline-block;
+    padding: 0.5em 1em;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  form.login .primaryAction:hover {
+    background-color: #0056b3;
+  }
+</style>
 {% if socialaccount_providers %}
 <p style="text-align: center;" >{% blocktrans with site.name as site_name %}Please sign in with one
-of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
+of your existing third party accounts. Or, <a href="/accounts/login/">sign in</a>
 for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
 
 <div class="socialaccount_ballot" style="text-align: center;" >
