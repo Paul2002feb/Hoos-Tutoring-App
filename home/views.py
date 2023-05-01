@@ -26,6 +26,14 @@ def notification_page(request):
     return render(request,'home/notificationpage.html')
 
 def schedule_page(request):
+    my_user = TutoringUser.objects.filter(user=request.user).first()
+    # print(my_user.is_tutor)
+    if my_user.is_tutor == True:
+        if request.method == 'GET':
+            # request_list = TutorRequest.objects.get(request_user=request.user.username)
+            request_list = TutorRequest.objects.filter(tutor=request.user)
+            # print(request_list,'udgwgduwgf')
+            return render(request,'home/schedulepage.html', {'request_list' : request_list})
     return render(request,'home/schedulepage.html')
 
 def profile_page(request):

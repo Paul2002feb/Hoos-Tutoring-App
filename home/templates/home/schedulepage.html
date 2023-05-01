@@ -21,9 +21,16 @@
         selectable: true,
         selectHelper: true,
         // Add events to calendar
-        events: [
-          
-        ],
+        events: [],
+        //for (request in request_list) {
+         // event = {
+        //    title: request.student
+      //      start: String(request.session_date)+String(request.session_time)
+       //     end: String(request.session_date)+String(request.session_time)+String(request.duration)
+        //    color: 'red'
+        //  }
+      //    events.push(event)
+      //  },
         // Handle selecting a time slot
         select: function(start, end) {
           var title = prompt('Enter a title for the time slot:');

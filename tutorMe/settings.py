@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+k7(+26exq7x-kp@!)-*&!m01iv+1lsl*81#zz9tem7xgyxejc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 
@@ -67,7 +67,7 @@ ROOT_URLCONF = 'tutorMe.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'home', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -99,13 +99,13 @@ DATABASES = {
 
 WHITENOISE_USE_FINDERS = True
 
-# Redirect HTTP requests to HTTPS
-SECURE_SSL_REDIRECT = True
+# # Redirect HTTP requests to HTTPS
+# SECURE_SSL_REDIRECT = True
 
-# Set the HSTS header to force all requests to use HTTPS for half a year
-SECURE_HSTS_SECONDS = 15724800
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
+# # Set the HSTS header to force all requests to use HTTPS for half a year
+# SECURE_HSTS_SECONDS = 15724800
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
