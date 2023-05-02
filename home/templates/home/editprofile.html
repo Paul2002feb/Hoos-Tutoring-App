@@ -16,6 +16,7 @@
         </div>
         <div class="mb-3">
           <label for="pay_rate" class="form-label">Hourly Rate</label>
+          <!-- value cannot be greater than 99.99: max 4 digits -->
           <input type="number" class="form-control" id="pay_rate" name="pay_rate" value="{{ tutoring_user.pay_rate }}">
         </div>
         <div class="mb-3">

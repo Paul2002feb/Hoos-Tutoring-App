@@ -248,6 +248,18 @@ def edit_profile(request):
         new_location = request.POST.get('new_location') 
         locations_to_remove = request.POST.getlist('remove_location')
         classes_to_remove = request.POST.getlist('remove_classes')
+        if float(pay_rate) > 99.99 or float(pay_rate) < 0.0:
+            # pay_rate = tutoring_user.pay_rate
+            form_data = {
+                'full_name': tutoring_user.full_name,
+                'major': tutoring_user.major,
+                'pay_rate': tutoring_user.pay_rate,
+                'is_virtual': tutoring_user.is_virtual,
+                'locations': tutoring_user.locations,
+                'classes': tutoring_user.classes,
+            }
+            form = TutorForm(initial=form_data)
+            return render(request, 'home/editprofile.html', {'form': form, 'tutoring_user': tutoring_user})
         if 'is_virtual' in request.POST and request.POST['is_virtual'] == 'true':
             is_virtual = True
         else:
