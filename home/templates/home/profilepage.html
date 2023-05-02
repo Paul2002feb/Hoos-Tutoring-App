@@ -49,9 +49,9 @@
 
         <p>
             <strong>Courses Tutored:</strong>
-            {% for course in tutoring_user.classes %}
+            {% for course in courses %}
                 <li>
-                {{ course.subject }} {{ course.catalog_nbr }} {{ course }}
+                {{ course }}
                 </li>
             {% endfor %}
         </p>

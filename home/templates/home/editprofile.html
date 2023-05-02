@@ -51,7 +51,7 @@
         <div class="mb-3">
           <label for="classes" class="form-label">Courses (select courses to delete)</label>
           <ul class="list-group">
-            {% for course in tutoring_user.classes %}
+            {% for course in tutor_classes %}
               <li class="list-group-item">
                 <input type="checkbox" name="remove_classes" value="{{ course }}" class="location-checkbox">
                 {{ course }}

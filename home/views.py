@@ -1,6 +1,6 @@
 from datetime import datetime
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from allauth.account.views import SignupView
 from allauth.socialaccount.views import SignupView as SocialSignupView
@@ -37,7 +37,14 @@ def schedule_page(request):
     return render(request,'home/schedulepage.html')
 
 def profile_page(request):
-    return render(request,'home/profilepage.html')
+    tutor_user = TutoringUser.objects.filter(user=request.user).first();
+    classes = tutor_user.classes
+    new_classes = []
+    for course in classes:
+        course_parts = course.split()
+        new_course = " ".join(course_parts[1:])
+        new_classes.append(new_course)
+    return render(request,'home/profilepage.html', {'courses': new_classes})
 
 def search_tutors(request):
     if request.method == 'POST':
@@ -68,7 +75,7 @@ def search_tutors(request):
             # print('failed')
             return render(request, 'home/tutorsearch.html', {'error': 'Tutor not found'})
     elif request.method == 'GET':
-        input = request.GET.get('search-input')
+        input = request.GET.get('input')
         if input is None:
             return render(request, 'home/tutorsearch.html', {'tutor_list': []})
         else:
@@ -122,7 +129,12 @@ def view_requests(request):
             except TutorRequest.DoesNotExist:
                 pass  # Handle case where request_id does not exist
                 # print('pass')
-                    
+
+def tutor_profile(request, tutor_id):
+    tutor_user = get_object_or_404(User, id=tutor_id)
+    tutor = get_object_or_404(TutoringUser, user=tutor_user)
+    return render(request, 'home/viewtutorprofile.html', {'tutoring_user': tutor})
+
 def search_courses(request):
     try:
         tutoring_user = request.user.tutoringuser
@@ -288,17 +300,23 @@ def edit_profile(request):
 
         return HttpResponseRedirect('/profile/')
     else:
+        classes = tutoring_user.classes
+        new_classes = []
+        for course in classes:
+            course_parts = course.split()
+            new_course = " ".join(course_parts[1:])
+            new_classes.append(new_course)
         form_data = {
             'full_name': tutoring_user.full_name,
             'major': tutoring_user.major,
             'pay_rate': tutoring_user.pay_rate,
             'is_virtual': tutoring_user.is_virtual,
             'locations': tutoring_user.locations,
-            'classes': tutoring_user.classes,
+            'classes': classes,
         }
         form = TutorForm(initial=form_data)
 
-    return render(request, 'home/editprofile.html', {'form': form, 'tutoring_user': tutoring_user})
+    return render(request, 'home/editprofile.html', {'form': form, 'tutoring_user': tutoring_user, 'tutor_classes': new_classes})
 
 def add_availability(request):
     if request.method == 'POST':

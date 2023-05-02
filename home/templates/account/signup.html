@@ -38,22 +38,22 @@ width: 100%; display: flex; justify-content: center; align-items: center; min-he
     display: flex;
   }
 
-  .login-or {
+  .signup-or {
     font-size: 1.1em;
     margin: 1em;
     color: #777;
   }
 
-  form.login {
+  form.signup {
     max-width: 500px;
     margin: 0 auto;
     padding: 1em;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
-  form.login input[type="email"],
-  form.login input[type="text"],
-  form.login input[type="password"] {
+  form.signup input[type="email"],
+  form.signup input[type="text"],
+  form.signup input[type="password"] {
     display: block;
     width: 100%;
     padding: 0.5em;
@@ -63,13 +63,13 @@ width: 100%; display: flex; justify-content: center; align-items: center; min-he
     border-radius: 4px;
   }
 
-  form.login .secondaryAction {
+  form.signup .secondaryAction {
     float: right;
     text-decoration: none;
     color: #007bff;
   }
 
-  form.login .primaryAction {
+  form.signup .primaryAction {
     display: inline-block;
     padding: 0.5em 1em;
     background-color: #007bff;
@@ -79,14 +79,14 @@ width: 100%; display: flex; justify-content: center; align-items: center; min-he
     cursor: pointer;
   }
 
-  form.login .primaryAction:hover {
+  form.signup .primaryAction:hover {
     background-color: #0056b3;
   }
 </style>
 
 <h1>{% trans "Sign Up" %}</h1>
 
-<p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+<p style="text-align: center;">{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">Sign in</a>.{% endblocktrans %}</p>
 
 <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
   {% csrf_token %}

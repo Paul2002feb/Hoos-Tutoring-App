@@ -1,0 +1,56 @@
+{% extends "home/navbar.html" %}
+{% block page %}
+{% if not tutoring_user %}
+    <div class="container mt-4" style="text-align: center;">
+        <h2>Tutor not found</h2>
+        <p>{{ error_message }}</p>
+    </div>
+{% else %}
+        <div class="container mt-4" style="text-align: center;">
+            <div class="row"  style="text-align: center;">
+                <h2>{{ tutoring_user.full_name }}</h2>
+                <p><strong>Major: </strong>{{ tutoring_user.major }}</p>
+                <p><strong>Hourly Rate:</strong> {{ tutoring_user.pay_rate }}</p>
+                <p>
+                    <strong>Location Preference:</strong>
+                    {% for location in tutoring_user.locations %}
+                        <li>
+                            {{ location }}
+                        </li>
+                    {% endfor %}
+                </p>
+                <p>
+                    <strong>Online/In-person:</strong>
+                    {% if tutoring_user.is_virtual %}
+                        Virtual
+                    {% else %}
+                        In-person
+                    {% endif %}
+                </p>
+                    <p>
+                        <strong>Available Times:</strong>
+                        <table class="paulcontainer" style="margin-left: 0px;">
+                            <tr > 
+                                <th class="text-center styled-header">Date</th>
+                                <th class="text-center styled-header">Start Time</th>
+                            </tr>
+                            {% for available in tutoring_user.tutorSession %}
+                                <tr>
+                                    <td class="text-center styled-header">{{ available.date }}</td>
+                                    <td class="text-center styled-header">{{ available.time }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </p>
+                    <p>
+                        <strong>Courses Tutored:</strong>
+                        {% for course in tutoring_user.classes %}
+                            <li>
+                                {{ course.subject }} {{ course.catalog_nbr }} {{ course }}
+                            </li>
+                        {% endfor %}
+                    </p>
+            </div>
+        </div>
+{% endif %}
+{% endblock %}
