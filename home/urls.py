@@ -10,5 +10,5 @@ urlpatterns = [
     path('requestlist', views.view_requests, name='requestlist'),
     path('tutorsearch', views.search_tutors, name='tutorsearch'),
     path('tutorprofile/<int:tutor_id>/', views.tutor_profile, name='tutor_profile'),
-    # path('tutor_requests', views.tutor_requests, name='tutor_requests')
+    path('favoritelist', views.view_favorites, name='favoritelist')
 ]

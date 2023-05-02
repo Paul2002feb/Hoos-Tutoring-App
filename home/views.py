@@ -131,15 +131,28 @@ def view_requests(request):
                 # print('pass')
 
 def tutor_profile(request, tutor_id):
+    my_user = TutoringUser.objects.filter(user=request.user).first()
     tutor_user = get_object_or_404(User, id=tutor_id)
     tutor = get_object_or_404(TutoringUser, user=tutor_user)
+    favorite_list = TutoringUser.objects.filter(
+            Q(full_name__in=my_user.favorite_list))
+    if (favorite_list.contains(tutor)):
+        favorited = True
+    else:
+        favorited = False
     classes = tutor.classes
     tutor_classes = []
     for course in classes:
         course_parts = course.split()
         new_course = " ".join(course_parts[1:])
         tutor_classes.append(new_course)
-    return render(request, 'home/viewtutorprofile.html', {'tutoring_user': tutor, 'classes': tutor_classes})
+    if request.method == 'POST':
+        my_user.favorite_list.append(tutor.full_name)
+        tutor.favorites += 1
+        favorited = True
+        my_user.save()
+        tutor.save()
+    return render(request, 'home/viewtutorprofile.html', {'tutoring_user': tutor, 'classes': tutor_classes, 'favorited' : favorited})
 
 def search_courses(request):
     try:
@@ -347,3 +360,57 @@ def add_availability(request):
         # print(available_slots)
        
         return render(request, 'home/availability.html')  
+    
+def view_favorites(request):
+    my_user = TutoringUser.objects.filter(user=request.user).first()
+    # print(my_user.is_tutor)
+    if request.method == 'GET':
+        # request_list = TutorRequest.objects.get(request_user=request.user.username)
+        favorite_list = TutoringUser.objects.filter(
+            Q(full_name__in=my_user.favorite_list))
+        # print(request_list,'udgwgduwgf')
+        return render(request,'home/favoriteindex.html', {'favorite_list' : favorite_list})
+    
+    if request.method == 'POST':
+        if (request.POST.get('favorite_name')):
+            favorite_name = request.POST.get('favorite_name')
+        # print(request_id)
+            try:
+                my_user.favorite_list.remove(favorite_name)
+                my_user.save()
+                tutor = TutoringUser.objects.filter(full_name=favorite_name).first()
+                tutor.favorites -= 1
+                tutor.save()
+                # print(tutor_request.status)
+                return redirect("/favoritelist")  # Redirect to the request list page after successful update
+            except TutorRequest.DoesNotExist:
+                # print('pass')
+                pass  # Handle case where request_id does not exist
+                # print('pass')
+        else:
+            tutor_id = request.POST.get('tutor_id')
+            tutor = TutoringUser.objects.filter(id=tutor_id).first()
+            if tutor:
+                session_date_time = request.POST.get('session_date')
+                date_time = session_date_time.split()
+                session_date = date_time[0]
+                session_time = date_time[1]
+                session_duration = request.POST.get('session_size')
+                description = request.POST.get('description')
+                student = request.user
+            
+                tutor_request = TutorRequest.objects.create(
+                    student=student,
+                    tutor=tutor.user,
+                    session_date=session_date,
+                    session_time=session_time,
+                    duration = session_duration,
+                    description=description,
+                    status='pending'
+                )
+                # print(tutor_request)
+                tutor_request.save()
+                return redirect('/requestlist')  # replace with the appropriate URL for the student dashboard
+            else:
+                # print('failed')
+                return render(request, 'home/tutorsearch.html', {'error': 'Tutor not found'})
