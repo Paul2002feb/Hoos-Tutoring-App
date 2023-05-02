@@ -34,6 +34,7 @@
     <th class="text-center styled-header" style="color: white">Major</th>
     <th class="text-center styled-header" style="color: white">Course Tutored</th>
     <th class="text-center styled-header" style="color: white">Pay Rate</th>
+    <th class="text-center styled-header" style="color: white">Favorited By</th>
     <th class="text-center styled-header" style="color: white">Request</th>
 
   </tr >
@@ -52,6 +53,7 @@
       {% endfor %}
     </td>
     <td class="text-center styled-header">{{ tutor.pay_rate }}</td>
+    <td class="text-center styled-header">{{ tutor.favorites }}</td>
     <td class="text-center styled-header">
       <form action="" method="POST">
         {% csrf_token %}

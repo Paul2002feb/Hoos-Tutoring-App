@@ -97,7 +97,8 @@ class TutoringUser(models.Model):
         blank=True,
         null=True
     )
-
+    favorite_list = ArrayField(models.CharField(max_length=100, default="NA"), default=get_default)
+    favorites = models.IntegerField(default=0)
     def set_availability(self, availabilities):
         self.tutorSession = availabilities
 

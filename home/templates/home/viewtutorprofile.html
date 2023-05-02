@@ -52,5 +52,17 @@
                     </p>
             </div>
         </div>
+        <div class="row"  style="text-align: center;">
+        {% if not favorited %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <button type="submit">Favorite</button>
+        </form>
+        {% else %}
+        <strong>Favorited</strong>
+        {% endif %}
+        </div>
+        
+
 {% endif %}
 {% endblock %}
