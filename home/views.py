@@ -37,7 +37,14 @@ def schedule_page(request):
     return render(request,'home/schedulepage.html')
 
 def profile_page(request):
-    return render(request,'home/profilepage.html')
+    tutor_user = TutoringUser.objects.filter(user=request.user).first();
+    classes = tutor_user.classes
+    new_classes = []
+    for course in classes:
+        course_parts = course.split()
+        new_course = " ".join(course_parts[1:])
+        new_classes.append(new_course)
+    return render(request,'home/profilepage.html', {'courses': new_classes})
 
 def search_tutors(request):
     if request.method == 'POST':
@@ -281,17 +288,23 @@ def edit_profile(request):
 
         return HttpResponseRedirect('/profile/')
     else:
+        classes = tutoring_user.classes
+        new_classes = []
+        for course in classes:
+            course_parts = course.split()
+            new_course = " ".join(course_parts[1:])
+            new_classes.append(new_course)
         form_data = {
             'full_name': tutoring_user.full_name,
             'major': tutoring_user.major,
             'pay_rate': tutoring_user.pay_rate,
             'is_virtual': tutoring_user.is_virtual,
             'locations': tutoring_user.locations,
-            'classes': tutoring_user.classes,
+            'classes': classes,
         }
         form = TutorForm(initial=form_data)
 
-    return render(request, 'home/editprofile.html', {'form': form, 'tutoring_user': tutoring_user})
+    return render(request, 'home/editprofile.html', {'form': form, 'tutoring_user': tutoring_user, 'tutor_classes': new_classes})
 
 def add_availability(request):
     if request.method == 'POST':
