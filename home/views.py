@@ -360,6 +360,9 @@ def view_favorites(request):
             try:
                 my_user.favorite_list.remove(favorite_name)
                 my_user.save()
+                tutor = TutoringUser.objects.filter(full_name=favorite_name).first()
+                tutor.favorites -= 1
+                tutor.save()
                 # print(tutor_request.status)
                 return redirect("/favoritelist")  # Redirect to the request list page after successful update
             except TutorRequest.DoesNotExist:
