@@ -89,17 +89,17 @@ width: 100%; display: flex; justify-content: center; align-items: center; min-he
 {% get_providers as socialaccount_providers %}
 
 {% if socialaccount_providers %}
-<p>{% blocktrans with site.name as site_name %}Please sign in with one
+<p style="text-align: center;">{% blocktrans with site.name as site_name %}Please sign in with one
 of your existing third party accounts. Or, <a href="/login">sign up</a>
 for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
 
-<div class="socialaccount_ballot">
+<div class="socialaccount_ballot" style="margin-top: -5px;">
 
   <ul class="socialaccount_providers">
     {% include "socialaccount/snippets/provider_list.html" with process="login" %}
   </ul>
 
-  <div class="login-or">{% trans 'or' %}</div>
+  <div class="login-or" style="margin-top: 0px;">{% trans 'or' %}</div>
 
 </div>
 

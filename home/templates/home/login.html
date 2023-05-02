@@ -97,13 +97,13 @@ width: 100%; display: flex; justify-content: center; align-items: center; min-he
 of your existing third party accounts. Or, <a href="/accounts/login/">sign in</a>
 for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
 
-<div class="socialaccount_ballot" style="text-align: center;" >
+<div class="socialaccount_ballot" style="text-align: center; margin-top: -5px;">
 
   <ul class="socialaccount_providers" >
     {% include "socialaccount/snippets/provider_list.html" with process="signup" %}
   </ul>
 
-  <div class="login-or" style="margin: 1rem 0;" >{% trans 'or' %}</div>
+  <div class="login-or" style="margin-top: 0px;" >{% trans 'or' %}</div>
 
 </div>
 

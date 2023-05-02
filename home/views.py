@@ -140,14 +140,19 @@ def tutor_profile(request, tutor_id):
         favorited = True
     else:
         favorited = False
+    classes = tutor.classes
+    tutor_classes = []
+    for course in classes:
+        course_parts = course.split()
+        new_course = " ".join(course_parts[1:])
+        tutor_classes.append(new_course)
     if request.method == 'POST':
         my_user.favorite_list.append(tutor.full_name)
         tutor.favorites += 1
         favorited = True
         my_user.save()
         tutor.save()
-        return render(request, 'home/viewtutorprofile.html', {'tutoring_user': tutor, 'favorited' : favorited})
-    return render(request, 'home/viewtutorprofile.html', {'tutoring_user': tutor, 'favorited' : favorited})
+    return render(request, 'home/viewtutorprofile.html', {'tutoring_user': tutor, 'classes': tutor_classes, 'favorited' : favorited})
 
 def search_courses(request):
     try:
@@ -177,7 +182,7 @@ def search_courses(request):
             if subject is None:
                 squery = ""
             else: 
-                squery = "&subject=" + subject
+                squery = "&subject=" + subject.upper()
 
             if course_code is None:
                 cquery = ""
@@ -265,6 +270,7 @@ def tutor(request):
     return render(request, 'home/tutorform.html', {'form':form})
 
 def edit_profile(request):
+    majors = TutoringUser.MAJOR_CHOICES
     tutoring_user = request.user.tutoringuser
     if request.method == 'POST':
         full_name = request.POST.get('full_name')
@@ -274,6 +280,18 @@ def edit_profile(request):
         new_location = request.POST.get('new_location') 
         locations_to_remove = request.POST.getlist('remove_location')
         classes_to_remove = request.POST.getlist('remove_classes')
+        if float(pay_rate) > 99.99 or float(pay_rate) < 0.0:
+            # pay_rate = tutoring_user.pay_rate
+            form_data = {
+                'full_name': tutoring_user.full_name,
+                'major': tutoring_user.major,
+                'pay_rate': tutoring_user.pay_rate,
+                'is_virtual': tutoring_user.is_virtual,
+                'locations': tutoring_user.locations,
+                'classes': tutoring_user.classes,
+            }
+            form = TutorForm(initial=form_data)
+            return render(request, 'home/editprofile.html', {'form': form, 'tutoring_user': tutoring_user})
         if 'is_virtual' in request.POST and request.POST['is_virtual'] == 'true':
             is_virtual = True
         else:
@@ -318,7 +336,7 @@ def edit_profile(request):
         }
         form = TutorForm(initial=form_data)
 
-    return render(request, 'home/editprofile.html', {'form': form, 'tutoring_user': tutoring_user, 'tutor_classes': new_classes})
+    return render(request, 'home/editprofile.html', {'form': form, 'tutoring_user': tutoring_user, 'tutor_classes': new_classes, 'majors': majors})
 
 def add_availability(request):
     if request.method == 'POST':
