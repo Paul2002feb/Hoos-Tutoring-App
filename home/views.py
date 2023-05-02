@@ -257,6 +257,7 @@ def tutor(request):
     return render(request, 'home/tutorform.html', {'form':form})
 
 def edit_profile(request):
+    majors = TutoringUser.MAJOR_CHOICES
     tutoring_user = request.user.tutoringuser
     if request.method == 'POST':
         full_name = request.POST.get('full_name')
@@ -322,7 +323,7 @@ def edit_profile(request):
         }
         form = TutorForm(initial=form_data)
 
-    return render(request, 'home/editprofile.html', {'form': form, 'tutoring_user': tutoring_user, 'tutor_classes': new_classes})
+    return render(request, 'home/editprofile.html', {'form': form, 'tutoring_user': tutoring_user, 'tutor_classes': new_classes, 'majors': majors})
 
 def add_availability(request):
     if request.method == 'POST':
