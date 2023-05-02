@@ -123,8 +123,10 @@ def view_requests(request):
                 pass  # Handle case where request_id does not exist
                 # print('pass')
 
-def tutor_profile(request, tutor_name):
-    tutor = get_object_or_404(TutoringUser, full_name=tutor_name)
+def tutor_profile(request, tutor_id):
+    tutor_user = get_object_or_404(User, id=tutor_id)
+    tutor = get_object_or_404(TutoringUser, user=tutor_user)
+    return render(request, 'home/viewtutorprofile.html', {'tutoring_user': tutor})
 
 def search_courses(request):
     try:

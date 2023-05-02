@@ -31,7 +31,7 @@
   {% for tutor in tutor_list %} {% if tutor.is_tutor %}
   <tr >
     <td class="text-center styled-header"> 
-      <a href='tutorprofile/{{ tutor.full_name }}/'>{{ tutor.full_name }}</a>
+      <a href='tutorprofile/{{ tutor.user.id }}/'>{{ tutor.full_name }}</a>
     </td>    
     <td class="text-center styled-header">{{ tutor.major }}</td>
     <td class="text-center styled-header">
