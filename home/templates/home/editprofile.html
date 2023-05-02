@@ -12,7 +12,11 @@
         </div>
         <div class="mb-3">
           <label for="major" class="form-label">Major</label>
-          <input type="text" class="form-control" id="major" name="major" value="{{ tutoring_user.major }}">
+          <select class="form-select" id="major" name="major">
+            {% for value, label in majors %}
+              <option value="{{ value }}" {% if tutoring_user.major == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
         </div>
         <div class="mb-3">
           <label for="pay_rate" class="form-label">Hourly Rate</label>
