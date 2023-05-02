@@ -68,7 +68,7 @@ def search_tutors(request):
             # print('failed')
             return render(request, 'home/tutorsearch.html', {'error': 'Tutor not found'})
     elif request.method == 'GET':
-        input = request.GET.get('search-input')
+        input = request.GET.get('input')
         if input is None:
             return render(request, 'home/tutorsearch.html', {'tutor_list': []})
         else:
@@ -125,14 +125,6 @@ def view_requests(request):
 
 def tutor_profile(request, tutor_name):
     tutor = get_object_or_404(TutoringUser, full_name=tutor_name)
-    return render(request, 'home/viewtutorprofile.html', {'tutoring_user': tutor})
-#     tutor_name = request.GET.get('tutor_name')
-#     tutoring_user = TutoringUser.objects.filter(full_name=tutor_name).first()
-#     if not tutoring_user:
-#         return render(request, 'home/error.html', {'error_message': 'Tutor not found'})
-#     else:
-#         return render(request, 'home/viewtutorprofile.html', {'tutoring_user': tutoring_user})
-
 
 def search_courses(request):
     try:

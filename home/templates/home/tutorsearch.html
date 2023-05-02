@@ -1,27 +1,20 @@
 {% extends "home/navbar.html" %} {% block page %}
 <form action="/tutorsearch" method="GET" class="containering">
+
+  {% csrf_token %}
   <!-- <label for="search-input" class="somecss">Tutor Search:</label> -->
-  <!-- <div class="centeringnomargin"> -->
-
+  <div class="centeringnomargin" style="display: flex; flex-direction: column; align-items: center;">
     <img src="/static/home/images/Search.png" 
-      width="400" 
-      height="200">
-  <!-- </div> -->
-
-  <input
-    type="text"
-    class="form-control"
-    id="search-input"
-    name="search-input"
-    placeholder="Search by Tutor's Name, Course Number, Department..."
-    required
-  /><br /><br />
-
-  <div class="row h-5 justify-content-center align-items-center">
-    <!-- <div class="col-auto"> -->
-    <button class="button-56" style="color:white" class="btn btn-primary" type="submit">Search</button>
-
-    <!-- </div> -->
+    width="400" 
+    height="200">    
+  </div>
+  <div style="margin-top: 25px; font-family:'Bebas Neue'; letter-spacing:2px; font-weight: bold; font-size: large; padding: 0;">
+    Search For Tutors <br>
+    <input type="text" class="form-control" id="input" name="input" placeholder="Ex. 'Advanced Software Development Techniques', 'John Blue'">
+  
+</div>
+    <div class="row h-5 justify-content-center align-items-center">
+      <button class="button-56" style="color:white" class="btn btn-primary" type="submit" style="background-color:#523A28" class="white">Search</button>
   </div>
 </form>
 {% if tutor_list %}
