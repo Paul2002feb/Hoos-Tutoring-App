@@ -9,6 +9,6 @@ urlpatterns = [
     path('tutorform',views.tutor, name='tutorform'),
     path('requestlist', views.view_requests, name='requestlist'),
     path('tutorsearch', views.search_tutors, name='tutorsearch'),
-    path('tutorprofile/<str:tutor_name>/', views.tutor_profile, name='tutor_profile'),
+    path('tutorprofile/<int:tutor_id>/', views.tutor_profile, name='tutor_profile'),
     # path('tutor_requests', views.tutor_requests, name='tutor_requests')
 ]
