@@ -1,6 +1,6 @@
 from datetime import datetime
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from allauth.account.views import SignupView
 from allauth.socialaccount.views import SignupView as SocialSignupView
@@ -114,7 +114,18 @@ def view_requests(request):
             except TutorRequest.DoesNotExist:
                 pass  # Handle case where request_id does not exist
                 # print('pass')
-                    
+
+def tutor_profile(request, tutor_name):
+    tutor = get_object_or_404(TutoringUser, full_name=tutor_name)
+    return render(request, 'home/viewtutorprofile.html', {'tutoring_user': tutor})
+#     tutor_name = request.GET.get('tutor_name')
+#     tutoring_user = TutoringUser.objects.filter(full_name=tutor_name).first()
+#     if not tutoring_user:
+#         return render(request, 'home/error.html', {'error_message': 'Tutor not found'})
+#     else:
+#         return render(request, 'home/viewtutorprofile.html', {'tutoring_user': tutoring_user})
+
+
 def search_courses(request):
     try:
         tutoring_user = request.user.tutoringuser
