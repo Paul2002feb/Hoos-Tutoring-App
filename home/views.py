@@ -151,7 +151,7 @@ def search_courses(request):
             if subject is None:
                 squery = ""
             else: 
-                squery = "&subject=" + subject
+                squery = "&subject=" + subject.upper()
 
             if course_code is None:
                 cquery = ""
