@@ -143,6 +143,7 @@ def tutor_profile(request, tutor_id):
     if request.method == 'POST':
         my_user.favorite_list.append(tutor.full_name)
         tutor.favorites += 1
+        favorited = True
         my_user.save()
         tutor.save()
         return render(request, 'home/viewtutorprofile.html', {'tutoring_user': tutor, 'favorited' : favorited})
