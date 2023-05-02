@@ -133,7 +133,13 @@ def view_requests(request):
 def tutor_profile(request, tutor_id):
     tutor_user = get_object_or_404(User, id=tutor_id)
     tutor = get_object_or_404(TutoringUser, user=tutor_user)
-    return render(request, 'home/viewtutorprofile.html', {'tutoring_user': tutor})
+    classes = tutor.classes
+    tutor_classes = []
+    for course in classes:
+        course_parts = course.split()
+        new_course = " ".join(course_parts[1:])
+        tutor_classes.append(new_course)
+    return render(request, 'home/viewtutorprofile.html', {'tutoring_user': tutor, 'classes': tutor_classes})
 
 def search_courses(request):
     try:
