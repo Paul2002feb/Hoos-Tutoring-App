@@ -310,8 +310,8 @@ def edit_profile(request):
         
         if classes_to_remove:
             for course in classes_to_remove:
-                tutoring_user.classes.remove(course)
-
+                tutoring_user.classes = [c for c in tutoring_user.classes if course not in c]
+            
         # Update the TutoringUser object with the new values
         TutoringUser.objects.filter(pk=tutoring_user.pk).update(
             full_name=full_name,
