@@ -340,6 +340,7 @@ def edit_profile(request):
 
     return render(request, 'home/editprofile.html', {'form': form, 'tutoring_user': tutoring_user, 'tutor_classes': new_classes, 'majors': majors})
 
+
 def add_availability(request):
     if request.method == 'POST':
         date = request.POST['date']
@@ -348,21 +349,23 @@ def add_availability(request):
         input_datetime = datetime.strptime(input_datetime_str, '%Y-%m-%d %H:%M')
         
         current_datetime = datetime.now()
+        future_limit_datetime = current_datetime + timedelta(weeks=20)  
 
-        if input_datetime >= current_datetime:
+        if current_datetime <= input_datetime <= future_limit_datetime:
             tutor = TutoringUser.objects.get(user=request.user)
             tutor.add_availability({'date': date, 'time': time})
             tutor.save()
             # print(tutor)
             return redirect('/profile/')
         else:
-            messages.error(request, 'Please enter a valid date and time (today or future).')
+            messages.error(request, 'Please enter a valid date and time (today or up to 5 months into the future).')
 
     tutor = TutoringUser.objects.get(user=request.user)
     available_slots = tutor.get_availability()
     # print(available_slots)
 
     return render(request, 'home/availability.html')
+
     
 def view_favorites(request):
     my_user = TutoringUser.objects.filter(user=request.user).first()
