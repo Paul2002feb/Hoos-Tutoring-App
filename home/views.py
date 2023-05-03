@@ -13,6 +13,8 @@ from django.http import HttpResponse
 from .models import *
 from django.db.models.functions import Lower
 from django.db.models import Q
+from django.contrib import messages
+
 
 
 # Create your views here.
@@ -342,24 +344,25 @@ def add_availability(request):
     if request.method == 'POST':
         date = request.POST['date']
         time = request.POST['time']
-        # session_length = request.POST['session_length']
+        input_datetime_str = f'{date} {time}'
+        input_datetime = datetime.strptime(input_datetime_str, '%Y-%m-%d %H:%M')
         
+        current_datetime = datetime.now()
 
-        tutor = TutoringUser.objects.get(user=request.user)
+        if input_datetime >= current_datetime:
+            tutor = TutoringUser.objects.get(user=request.user)
+            tutor.add_availability({'date': date, 'time': time})
+            tutor.save()
+            # print(tutor)
+            return redirect('/profile/')
+        else:
+            messages.error(request, 'Please enter a valid date and time (today or future).')
 
-        # tutor.add_availability({'date': date,'time': time, 'session_length': session_length})
-        tutor.add_availability({'date': date,'time': time})
+    tutor = TutoringUser.objects.get(user=request.user)
+    available_slots = tutor.get_availability()
+    # print(available_slots)
 
-        # Save the updated TutoringUser object
-        tutor.save()
-        # print(tutor)
-        return redirect('/profile/') 
-    else:
-        tutor = TutoringUser.objects.get(user=request.user)
-        available_slots = tutor.get_availability()
-        # print(available_slots)
-       
-        return render(request, 'home/availability.html')  
+    return render(request, 'home/availability.html')
     
 def view_favorites(request):
     my_user = TutoringUser.objects.filter(user=request.user).first()
