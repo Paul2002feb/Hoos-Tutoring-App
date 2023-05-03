@@ -19,6 +19,10 @@
                   @import url('https://fonts.googleapis.com/css2?family=Play&display=swap');
               </style>
           </head>
+          {% endif %}
+          {% if user.tutoringuser %}
+          <meta http-equiv="refresh" content="0; url = login" />
+          {% else %}
           <body>
               <div class="wrapper seven" style="margin-top: -15px;">
                   <div class="text-center">
@@ -26,8 +30,9 @@
                   </div>
               </div>
           </body>
-            {% endif %}
+          
           </div>
+
     
           <div class="card" style="margin-top: -35px;">
             <div class="card-body">
@@ -45,6 +50,7 @@
               </form>
             </div>
           </div>
+          {% endif %}
         </div>
       </div>
     </div>

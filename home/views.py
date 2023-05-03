@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, date, timedelta
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
@@ -60,7 +60,8 @@ def search_tutors(request):
             session_duration = request.POST.get('session_size')
             description = request.POST.get('description')
             student = request.user
-         
+            if (float(session_duration)< 0.0 or float(session_duration)> 120.0):
+                return render(request, 'home/tutorsearch.html', {'error': 'Duration invalid'})
             tutor_request = TutorRequest.objects.create(
                 student=student,
                 tutor=tutor.user,
@@ -84,7 +85,8 @@ def search_tutors(request):
             tutor_list = TutoringUser.objects.filter(
                 Q(full_name__icontains=input) | Q(pay_rate__icontains=input) | Q(major__icontains=input) | Q(classes__icontains=input)
             )
-            return render(request, 'home/tutorsearch.html', {'tutor_list': tutor_list})
+            print(date.today())
+            return render(request, 'home/tutorsearch.html', {'tutor_list': tutor_list, 'currdate': date.today()})
     return render(request,'home/tutorsearch.html')
 
 def view_requests(request):
@@ -370,10 +372,12 @@ def add_availability(request):
 def view_favorites(request):
     my_user = TutoringUser.objects.filter(user=request.user).first()
     # print(my_user.is_tutor)
+    favorite_list = TutoringUser.objects.filter(
+            Q(full_name__in=my_user.favorite_list))
     if request.method == 'GET':
         # request_list = TutorRequest.objects.get(request_user=request.user.username)
-        favorite_list = TutoringUser.objects.filter(
-            Q(full_name__in=my_user.favorite_list))
+        # favorite_list = TutoringUser.objects.filter(
+        #     Q(full_name__in=my_user.favorite_list))
         # print(request_list,'udgwgduwgf')
         return render(request,'home/favoriteindex.html', {'favorite_list' : favorite_list})
     
@@ -404,7 +408,8 @@ def view_favorites(request):
                 session_duration = request.POST.get('session_size')
                 description = request.POST.get('description')
                 student = request.user
-            
+                if (float(session_duration)< 0.0 or float(session_duration)> 120.0):
+                    return render(request, 'home/favoriteindex.html', {'favorite_list' : favorite_list})
                 tutor_request = TutorRequest.objects.create(
                     student=student,
                     tutor=tutor.user,
