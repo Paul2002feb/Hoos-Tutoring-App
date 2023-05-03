@@ -1,0 +1,28 @@
+{% extends "home/navbar.html" %}
+{% block page %}
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h2>Edit Profile</h2>
+      <form method="post" class="form" id="edit-form">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="full_name" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="full_name" name="full_name" value="{{ student.full_name }}">
+        </div>
+        <div class="mb-3">
+          <label for="major" class="form-label">Major</label>
+          <select class="form-select" id="major" name="major">
+            {% for value, label in majors %}
+              <option value="{{ value }}" {% if student.major == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
+        <button type="submit" class="btn btn-primary" id="save-btn" style="background-color:#523A28" class="white">
+          Save
+        </button>
+        <a href='/studentprofile/' class="btn btn-secondary" style="background-color:#523A28" class="white">Cancel</a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock page %}

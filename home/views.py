@@ -425,3 +425,20 @@ def view_favorites(request):
             else:
                 # print('failed')
                 return render(request, 'home/tutorsearch.html', {'error': 'Tutor not found'})
+            
+def student_profile_page(request):
+    student = TutoringUser.objects.filter(user=request.user).first()
+    return render(request, 'home/studentprofile.html', {'student': student})
+
+def edit_student_profile(request):
+    student = TutoringUser.objects.filter(user=request.user).first()
+    major_list = TutoringUser.MAJOR_CHOICES
+    
+    if request.method == 'POST':
+        student.full_name = request.POST.get('full_name')
+        student.major = request.POST.get('major')
+        student.save()
+        return HttpResponseRedirect('/studentprofile/')
+    
+    return render(request, 'home/editstudentprofile.html', {'student': student, 'majors': major_list})
+

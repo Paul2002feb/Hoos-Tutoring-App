@@ -1,0 +1,15 @@
+{% extends "home/navbar.html" %}
+{% block page %}
+    <div class="container mt-4" style="text-align: center;">
+    <div class="row"  style="text-align: center; ">
+        <div class="mydiv"></div>
+    {% if student %}
+    <h2>{{student.full_name}}</h2>
+        <p><strong>Major: </strong>{{student.major}}</p>
+    </div>
+    <a href='edit_profile/'>
+        <button class="button-56" style="color:white">Edit</button>
+    </a>
+    </div>
+    {% endif %}
+{% endblock %}
