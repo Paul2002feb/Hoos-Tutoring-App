@@ -8,7 +8,7 @@
             {% if user.is_authenticated %}
             <h2
               class="text-center mb-4"
-              style="font-weight: bold; color: rgb(0, 0, 0)"
+              style="font-weight: bold; color: rgb(0, 0, 0);margin-top: -28px;"
             >
               Welcome, {{ user.username }}!
             </h2>
@@ -20,7 +20,7 @@
               </style>
           </head>
           <body>
-              <div class="wrapper seven">
+              <div class="wrapper seven" style="margin-top: -15px;">
                   <div class="text-center">
                       <h3 class="typing"> Please fill out the form below:</h3>     
                   </div>
@@ -29,15 +29,15 @@
             {% endif %}
           </div>
     
-          <div class="card">
+          <div class="card" style="margin-top: -35px;">
             <div class="card-body">
               <form action="{% url 'home:tutorform' %}" method="post" class="form">
                 {% csrf_token %} {% bootstrap_form form %} 
                 {% buttons %}
                 <button
                   type="submit"
-                  class="btn btn-primary btn-block"
-                  style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0)"
+                  class="button-56" style="color:white"
+                  
                 >
                   Submit
                 </button>
