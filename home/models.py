@@ -27,7 +27,7 @@ class TutoringUser(models.Model):
         ('COMM', 'Commerce'),
         ('CPL', 'Comparative Literature'),
         ('CPE', 'Computer Engineering'),
-        ('CS', 'Computer Science (B.A.)'),
+        ('CS', 'Computer Science'),
         # ('', 'Computer Science (B.S.)'),
         ('DANC', 'Dance'),
         ('DRAM', 'Drama'),

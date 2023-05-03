@@ -16,10 +16,14 @@ class TutorForm(forms.ModelForm):
         self.fields['locations'].required = False
     def clean(self):
         isTutor = self.cleaned_data.get('is_tutor')
+        pay = self.cleaned_data.get('pay_rate')
+        loc = self.cleaned_data.get('locations')
         if isTutor:
             msg = forms.ValidationError("This field is required.")
-            self.add_error('pay_rate', msg)
-            self.add_error('locations', msg)
+            if (pay is None):
+                self.add_error('pay_rate', msg)
+            if (loc is None):
+                self.add_error('locations', msg)
         else:
             # Keep the database consistent. The user may have
             # submitted a shipping_destination even if shipping
