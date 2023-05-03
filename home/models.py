@@ -88,7 +88,7 @@ class TutoringUser(models.Model):
     major = models.CharField(max_length=4, choices=MAJOR_CHOICES)
     locations = ArrayField(models.CharField(max_length=20, default="NA"), default=get_default)
     is_virtual = models.BooleanField(default=False)
-    classes = ArrayField(models.CharField(max_length=50, default="NA"), default=get_default)
+    classes = ArrayField(models.CharField(max_length=255, default="NA"), default=get_default)
     availability = ArrayField(models.CharField(max_length=255, default="NA"), default=get_default)
     pay_rate = models.DecimalField(max_digits=4, decimal_places=2, default=0)
     tutorSession = ArrayField(
